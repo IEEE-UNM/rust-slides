@@ -44,6 +44,17 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{Variable Shadowing}
+  When two variables of the same name is declared, the second declared variable would be used by the compiler instead of the first one. This is called ``Variable Shadowing''.
+  \lstinputlisting{variable_shadowing1.rs}
+
+  This is different from making a variable mutable as the shadowed variable can be of a different type. (Rust is a static typed language)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variable Shadowing}
+  This two examples shows the difference between mutable variables and variable shadowing when assigning an integer first and a string slice later.
+  \lstinputlisting[caption=Comiple Error]{variable_shadowing2.rs}
+  \lstinputlisting[caption=No Compile Error]{variable_shadowing3.rs}
 \end{frame}
 
 \begin{frame}
