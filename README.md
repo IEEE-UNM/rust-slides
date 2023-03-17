@@ -5,7 +5,15 @@ Lecture slides for IEEE Rust workshop generated using Latex beamer package.
 The slides are generated using Latex. To compile the source, ensure that a Latex distribution is installed on your system.
 
 ### Latex Packages
-`beamer`
+
+- [`listings`](https://www.ctan.org/pkg/listings "listings package on ctan")
+- [`beamer`](https://www.ctan.org/pkg/beamer "beamer package on ctan") 
+- [`tcolorbox`](https://www.ctan.org/pkg/tcolorbox "tcolorbox package on ctan") 
+- [`graphicx`](https://www.ctan.org/pkg/graphicx "graphicx package on ctan") 
+- [`xcolor`](https://www.ctan.org/pkg/xcolor "xcolor package on ctan") 
+- [`babel`](https://www.ctan.org/pkg/babel "babel package on ctan") 
+- [`inputenc`](https://www.ctan.org/pkg/inputenc "inputenc package on ctan") 
+- [`fontenc`](https://www.ctan.org/pkg/fontenc "fontenc package on ctan") 
 
 ## Compilation
 To compile all the pdfs ensure that your have a Latex distribution installed. Once installed run:
