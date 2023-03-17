@@ -21,6 +21,7 @@ This will generate all the pdf files in the directory `slides`. However this can
 The `Makefile` also provide a convinient way to archive the output directory.
 
 zip: `make zip`
+
 tar.gz: `make tar`
 
 ### Cleaning
