@@ -33,6 +33,11 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{Mutability and Variables}
+  By default, Rust variables are not mutable (cannot change). This is to help programmers to take advantage of Rust's safety and easy concurrency.
+  \lstinputlisting{variable_mutability1.rs}
+
+  To make a variable mutable, use the \inlinecode{mut} keyword after the \inlinecode{let} keyword.
+  \lstinputlisting{variable_mutability2.rs}
 \end{frame}
 
 \begin{frame}
