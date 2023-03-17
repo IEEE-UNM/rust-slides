@@ -10,9 +10,25 @@
 \end{frame}
 
 \section{Variables}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Assigning Variable}
+  Rust uses the \inlinecode{let} keyword to assign/bind a value to a variable. The general format for assigning a variable is as follows:
+
+\begin{lstlisting}[mathescape=true, language=Rust]
+let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \end{lstlisting}
+
+  Exmaples:
+  \lstinputlisting[language=Rust]{variable_assignment1.rs}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Assigning Variable}
+  Often times, the Rust compiler can infer the type of the varible during compile time. Therefore specifying the type is not always nessary.
+  \lstinputlisting[language=Rust]{variable_assignment2.rs}
+
+  The compiler can also infer the type when the variable is declared first and then assign the a value at a later time. Just make sure a value is assigned to it before using it.
+  \lstinputlisting[language=Rust]{variable_assignment3.rs}
 \end{frame}
 
 \begin{frame}
@@ -31,10 +47,13 @@
   \frametitle{Statics}
 \end{frame}
 
-
 \section{Printing}
 \begin{frame}
   \frametitle{println macro}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Printing Variables}
 \end{frame}
 
 \begin{frame}
