@@ -59,10 +59,14 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{Constants}
+  Constants are immutable variable and cannot be used with the \inlinecode{mut} keyword. It can be declared in any scope including the global scope. It is also valid for the entire runtime of the program and must be a constant expression (cannot be computed at runtime).
+  \lstinputlisting{constants.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Statics}
+  Statics are simillar to constants. Static variables are valid for the entire lifetime of the program. Unlike constants, static variables can be mutable but accessing a mutable static variable requires it to be in an \inlinecode{unsafe} block. Static variables can be created by using the \inlinecode{'static} lifetime or string literals (any strings created by `` '') are always static variables.
+  \lstinputlisting{statics.rs}
 \end{frame}
 
 \section{Printing}
