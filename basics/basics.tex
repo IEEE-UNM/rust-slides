@@ -97,18 +97,53 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \subsection{Scalar Types}
 \begin{frame}
   \frametitle{Integers}
+  There are two types of integers. Both of them have options with different sizes.
+
+  Unsigned Integers:
+  \begin{itemize}
+    \item[u8]{Unsigned 8-bit integer}
+    \item[u16]{Unsigned 16-bit integer}
+    \item[u32]{Unsigned 32-bit integer}
+    \item[u64]{Unsigned 64-bit integer}
+    \item[u128]{Unsigned 128-bit integer}
+    \item[usize]{The pointer-sized unsigned integer type. (32-bit in 32-bit targets and 64-bit in 64-bit targets.)}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Integers}
+  Signed Integers:
+  \begin{itemize}
+    \item[i8]{Signed 8-bit integer}
+    \item[i16]{Signed 16-bit integer}
+    \item[i32]{Signed 32-bit integer}
+    \item[i64]{Signed 64-bit integer}
+    \item[i128]{Signed 128-bit integer}
+    \item[isize]{The pointer-sized signed integer type. (32-bit in 32-bit targets and 64-bit in 64-bit targets.)}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Floating Point Numbers}
+  There are two floating points numbers types. \inlinecode{f32} is a 32-bit floating point type and \inlinecode{f64} is a 64-bit floating point type.
+
+  Both the floating points number follows the IEEE 754--2008 standard. \inlinecode{f32} follows the ``binary32'' format and \inlinecode{f64} follows the ``binary64'' format.
+  \lstinputlisting{float.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Boolean}
+  The \inlinecode{bool} type is a type that can be either \inlinecode{true} or \inlinecode{false}.
+  \lstinputlisting{bool.rs}
+  \alert{Notice} that boolean numbers can be represented as integers. A boolean value of \inlinecode{true} would be 1 and a boolean value of \inlinecode{false} would be 0.
 \end{frame}
 
 \begin{frame}
   \frametitle{Characters}
+  The \inlinecode{char} type represents a single character. However, unlike C \inlinecode{char}, Rust \inlinecode{char} supports Unicode characters more specifically a \href{https://www.unicode.org/glossary/\#unicode_scalar_value}{Unicode scalar value} is considered a character.
+
+  Since Unicode is supported your favorite emoji works in Rust.
+  \lstinputlisting[caption=See Source File on GitHub for the Correct Emojis]{char.rs}
 \end{frame}
 
 \subsection{Compound Types}
@@ -187,5 +222,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \subsection<presentation>*{Additional Resources}
 \begin{frame}[allowframebreaks]
    \href{https://doc.rust-lang.org/std/fmt/index.html}{More Formatting Options}
+
+   \href{https://ieeexplore.ieee.org/document/4610935/}{IEEE 754-2008 Standard}
 \end{frame}
 \end{document}
