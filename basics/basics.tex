@@ -71,15 +71,26 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \section{Printing}
 \begin{frame}
-  \frametitle{println macro}
+  \frametitle{println/print macro}
+  Rust provides macros to help with printing to the standard output. In previous slides, the \inlinecode{println} macro is used, this macro would print the formatted string into the standard output.
+  \lstinputlisting[caption={Prints `Hello, world!' to standard output}]{println1.rs}
+  The \inlinecode{print} macro is simillar to \inlinecode{println} except it doesn't print a new line after the string.
+
+  \alert{Note:} Macro calls are different than functions calls talked in future chapter. Macro calls have an ``!'' at the end of the macro name.
 \end{frame}
 
 \begin{frame}
   \frametitle{Printing Variables}
+  Strings can be formatted to print variables.
+  \lstinputlisting{println2.rs}
+  There are also formatting options to control how the variable displayed such as controlling it's alignment and width the variable will take up.
+  \lstinputlisting[caption={Prints the variable to be center aligned and 10 characters wide}]{println3.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Print to Standard Error}
+  Rust provides macros to print to standard error as well. This is achived by using the \inlinecode{eprint} and \inlinecode{eprintln} macro. The syntax is simillar to the \inlinecode{print} and \inlinecode{println} macro.
+  \lstinputlisting{eprintln.rs}
 \end{frame}
 
 \section{Primitive Types}
@@ -174,4 +185,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \appendix
 \section<presentation>*{\appendixname}
 \subsection<presentation>*{Additional Resources}
+\begin{frame}[allowframebreaks]
+   \href{https://doc.rust-lang.org/std/fmt/index.html}{More Formatting Options}
+\end{frame}
 \end{document}
