@@ -143,23 +143,47 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
   The \inlinecode{char} type represents a single character. However, unlike C \inlinecode{char}, Rust \inlinecode{char} supports Unicode characters more specifically a \href{https://www.unicode.org/glossary/\#unicode_scalar_value}{Unicode scalar value} is considered a character.
 
   Since Unicode is supported your favorite emoji works in Rust.
-  \lstinputlisting[caption=See Source File on GitHub for the Correct Emojis]{char.rs}
+  % \lstinputlisting[caption=See Source File on GitHub for the Correct Emojis]{char.rs}
 \end{frame}
 
 \subsection{Compound Types}
-\begin{frame}
+\begin{frame}[allowframebreaks]
   \frametitle{Arrays}
+  Arrays are a collection of fix-sized items of the same type. The array type is denoted using \inlinecode{[T;\@ N]} where \inlinecode{T} is the type and \inlinecode{N} is the number of elements in the array.
+  \lstinputlisting{array1.rs}
+
+  Each element in the array can be indexed using \inlinecode{[i]} where \inlinecode{i} is the index of the element.
+  \lstinputlisting{array2.rs}
+
+  \alert{Note:} If an element outside of the array size is accessed, the program will ``panic''/crash. By default the compiler will fail to compile if it notices an access of an array that is out of bound. This example uses \inlinecode{\#[allow(unconditional{\_}panic)]} to allow it to compile. However if the index is more dynamic e.g. from user input, the compiler can't catch it.
+  \lstinputlisting{array3.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Slices}
+  A \inlinecode{slice} type is a dynamically-sized view into a contiguous sequence of any type. It is usally seen as a reference.
+  \lstinputlisting{slice1.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Slices}
+  A special slice called a string slice \inlinecode{str} represents a string of \inlinecode{char}.
+  \lstinputlisting{slice2.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Tuples and Tuple Destruction}
-  % Tuple being Hetrogeneous
-  % Indexing
-  % Destructing
+  Tuples are a way to group different data together. Unlike Arrays each tuple elements can be different types (hetrogeneous). A tuple can be declared by writing a comma seperated list of types inside a parenthesis.
+  \lstinputlisting{tuples1.rs}
+  Tuples can be destructed into to get it's individual values.
+  \lstinputlisting{tuples2.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tuples and Tuple Destruction}
+  Each element of the tuple can also be accessed individually without destructing the tuple. This is done using the dot (.) then followed by the index.
+  \lstinputlisting{tuples3.rs}
+  A tuple without any elements is called a unit \inlinecode{()}. This is usually used to signify no returns from a function kinda like \inlinecode{void} in C.
 \end{frame}
 
 \section{Functions}
