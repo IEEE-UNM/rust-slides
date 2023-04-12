@@ -73,10 +73,10 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \begin{frame}
   \frametitle{println/print macro}
   Rust provides macros to help with printing to the standard output. In previous slides, the \inlinecode{println} macro is used, this macro would print the formatted string into the standard output.
-  \lstinputlisting[caption={Prints `Hello, world!' to standard output}]{println1.rs}
+  \lstinputlisting[caption={Prints `Hello, world\!' to standard output}]{println1.rs}
   The \inlinecode{print} macro is simillar to \inlinecode{println} except it doesn't print a new line after the string.
 
-  \alert{Note:} Macro calls are different than functions calls talked in future chapter. Macro calls have an ``!'' at the end of the macro name.
+  \alert{Note:} Macro calls are different than functions calls talked in future chapter. Macro calls have an ``\!'' at the end of the macro name.
 \end{frame}
 
 \begin{frame}
@@ -125,9 +125,9 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{Floating Point Numbers}
-  There are two floating points numbers types. \inlinecode{f32} is a 32-bit floating point type and \inlinecode{f64} is a 64-bit floating point type.
+  There are two floating points numbers types.\ \inlinecode{f32} is a 32-bit floating point type and \inlinecode{f64} is a 64-bit floating point type.
 
-  Both the floating points number follows the IEEE 754--2008 standard. \inlinecode{f32} follows the ``binary32'' format and \inlinecode{f64} follows the ``binary64'' format.
+  Both the floating points number follows the IEEE 754--2008 standard.\ \inlinecode{f32} follows the ``binary32'' format and \inlinecode{f64} follows the ``binary64'' format.
   \lstinputlisting{float.rs}
 \end{frame}
 
@@ -155,7 +155,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
   Each element in the array can be indexed using \inlinecode{[i]} where \inlinecode{i} is the index of the element.
   \lstinputlisting{array2.rs}
 
-  \alert{Note:} If an element outside of the array size is accessed, the program will ``panic''/crash. By default the compiler will fail to compile if it notices an access of an array that is out of bound. This example uses \inlinecode{\#[allow(unconditional{\_}panic)]} to allow it to compile. However if the index is more dynamic e.g. from user input, the compiler can't catch it.
+  \alert{Note:} If an element outside of the array size is accessed, the program will ``panic''/crash. By default the compiler will fail to compile if it notices an access of an array that is out of bound. This example uses \inlinecode{\#[allow (unconditional{\_}panic)]} to allow it to compile. However if the index is more dynamic e.g.\ from user input, the compiler can't catch it.
   \lstinputlisting{array3.rs}
 \end{frame}
 
@@ -189,19 +189,31 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \section{Functions}
 \begin{frame}
   \frametitle{Declaring Functions}
+  A function can be declared using the \inlinecode{fn} key word, then the name followed by a parenthesis and curly brackets. Any code to be executed in the function is placed in the curly brackets. By convention, function names are in \emph{snake\_case}.
+  \lstinputlisting{functions1.rs}
+  Rust functions can be declared any where in the source file and can be called just like any other programming languages.
 \end{frame}
 
 \begin{frame}
   \frametitle{Function Parameters}
+  Function arguments (parameters) are declared inbetween the parenthesis in the function declaration. Parameters are declared in the form \inlinecode{$variable\_name: type$}. Multiple parameters are seperated by commas.
+  \lstinputlisting{functions2.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Statements and Expressions}
+  \begin{itemize}
+    \item{Statements: Lines of codes to perform some actions}
+    \item{Expressions: Lines of codes to evaluate and return a value}
+  \end{itemize}
+  Exressions ends without a semicolon (;), any expression that ends with a semicolon would be statement. An example of a statement would be assigning a variable.
+  \lstinputlisting{functions3.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Function Returns}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Function Returns}
-  % Expressions and Statements (;)
+  Function return values are defined after (->). Rust will return any values returned by last expression in the function. However, the \inlinecode{return} keyword can be used to return the value early.
+  \lstinputlisting{functions5.rs}
 \end{frame}
 
 \section{Control Flow}
@@ -232,6 +244,11 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{For Loops}
+  % collections (arrays)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Patter Matching with \inlinecode{match}}
   % collections (arrays)
 \end{frame}
 
