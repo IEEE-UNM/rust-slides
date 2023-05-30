@@ -220,14 +220,20 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \subsection{If Else}
 \begin{frame}
   \frametitle{Using Ifs}
+  To run code based on different conditions, \inlinecode{if} expressions can be used. If the condition is true, the code inside of the block would be ran.
+  \lstinputlisting{if_else1.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Else If and Else}
+  Multiple conditions can be set using \inlinecode{else if} and an optional \inlinecode{else} expression can be used to handle the situation if all condition fails.
+  \lstinputlisting{if_else2.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{If Else with let}
+  \inlinecode{if}, \inlinecode{else if} and \inlinecode{else} are considered expressions. Therefore they can be used just like any other expressions.
+  \lstinputlisting{if_else3.rs}
 \end{frame}
 
 \subsection{Loops}
