@@ -239,18 +239,38 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \subsection{Loops}
 \begin{frame}
   \frametitle{\inlinecode{loop} Keyword}
-  % General Syntax
-  % Loop Labesl
-  % Returning Values
+  The \inlinecode{loop} keyword runs the code inside of the block indefinetly until the program crashes/stopped or a break keyword is used.
+  \lstinputlisting{loops1.rs}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Loop Labels}
+  \inlinecode{loop} can be labeled with a name. This is useful to break out of nested loops. The label is set by inserting an \inlinecode{'} followed by the label name and a \inlinecode{:} before a loop.
+  \lstinputlisting{loops2.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Returning Values from Loops}
+  All loops in Rust are also considered expressions, thefore can be used to return value from it. However, instead of using the \inlinecode{return} keyword, the return value is set using the \inlinecode{break} keyword.
+  \lstinputlisting{loops3.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{While Loops}
+  \inlinecode{while} loops in Rust is simillar to \inlinecode{while} loops in other programming languages. The code inside of the block will execute until the condition is no longer met.
+  \lstinputlisting{while.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{For Loops}
-  % collections (arrays)
+  Rust also have \inlinecode{for} loops which are used to loop over a given collection such as arrays or vectors.
+  \lstinputlisting{for1.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ranges and Iterators}
+  \inlinecode{for} loops can also be used with an iterator. The most common type of iterator used with \inlinecode{for} loops are \inlinecode{Range}s. A range generates a sequence of numbers from one number to another.
+  \lstinputlisting{for2.rs}
 \end{frame}
 
 \begin{frame}
@@ -271,5 +291,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
    \href{https://doc.rust-lang.org/std/fmt/index.html}{More Formatting Options}
 
    \href{https://ieeexplore.ieee.org/document/4610935/}{IEEE 754-2008 Standard}
+
+   \href{https://doc.rust-lang.org/core/iter/trait.Iterator.html}{Documentation about Iterators}
 \end{frame}
 \end{document}
