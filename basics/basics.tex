@@ -301,8 +301,27 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \end{frame}
 
 \section{Comments}
-\begin{frame}
+\begin{frame}[allowframebreaks]
   \frametitle{Comments}
+  Writing comments helps make code more readable. Rust uses \inlinecode{//} as comments. Anything in the same line after it would be considered a comment.
+  \lstinputlisting{comments1.rs}
+
+  Eventhough according to convention, single line comments are prefered, Rust still support multiple/block comments.
+  \lstinputlisting{comments2.rs}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Documentation Comments}
+  There are special types of comments in Rust used for generating html documentation. It uses \inlinecode{///} instead of \inlinecode{//}.
+
+  A special kinda of docments uses \inlinecode{//!}. This is used to document an item that contains the comment instead. This is usually used for documenting crates or modules (more on crates and modules later).
+  \lstinputlisting{documentation.rs}
+
+  To generate the html documentation, run \inlinecode{cargo doc}. The documentation should generate at \inlinecode{$cargo\_project\_directory$/target/doc}.
+
+  \alert{Note:} You can use \inlinecode{cargo doc --open} opens the documentation in your favorite web browser when after the documentation generated.
+
+  \alert{Note:} Rust documentation also supports Markdown. Hence, you can create title and source code blocks as examples in the documentation as well.
 \end{frame}
 
 % All of the following is optional and typically not needed.
