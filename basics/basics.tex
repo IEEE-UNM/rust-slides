@@ -273,9 +273,31 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
   \lstinputlisting{for2.rs}
 \end{frame}
 
+\subsection{Pattern Matching}
 \begin{frame}
-  \frametitle{Patter Matching with \inlinecode{match}}
-  % collections (arrays)
+  \frametitle{Pattern Matching with \inlinecode{match}}
+  The \inlinecode{match} keyword allows a Rust program to match a given values according to different patterns. It is usually used with \inlinecode{Enum} and \inlinecode{Option<T>}/\inlinecode{Result<T, E>}.
+  \lstinputlisting{patterns1.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exhausiveness of \inlinecode{match} construct}
+  All values the variable type can be must be covered under the match construct. This is enforced by the Rust compiler as unhandled values of the variables might cause unexpected bugs within the program.
+  \lstinputlisting{patterns2.rs}
+  This example is the same as previous but without one of the ``arm''/didn't consider the \inlinecode{None} case. However, this code won't compile and the Rust compiler will give an error.
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Catch All Patterns}
+  Often times when using a \inlinecode{match}, a programmer only cares about a few possiblity of the values and would like to ignore/have the code handle the others the same way.
+  \lstinputlisting{patterns3.rs}
+
+  \newpage
+
+  Alternativly, an arm with an ``\_'' could be use if the value is not being used.
+  \lstinputlisting{patterns4.rs}
+
+  There are other types of patterns that can be used as \inlinecode{match} arms. See Pattern Syntax in~\hyperlink{Additional Resources}{Additional Resources}.
 \end{frame}
 
 \section{Comments}
@@ -287,11 +309,13 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \appendix
 \section<presentation>*{\appendixname}
 \subsection<presentation>*{Additional Resources}
-\begin{frame}[allowframebreaks]
+\begin{frame}[allowframebreaks, label={Additional Resources}]
    \href{https://doc.rust-lang.org/std/fmt/index.html}{More Formatting Options}
 
    \href{https://ieeexplore.ieee.org/document/4610935/}{IEEE 754-2008 Standard}
 
    \href{https://doc.rust-lang.org/core/iter/trait.Iterator.html}{Documentation about Iterators}
+
+   \href{https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html}{Pattern Syntax}
 \end{frame}
 \end{document}
