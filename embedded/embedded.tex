@@ -18,14 +18,59 @@
 \section{Installing Crates}
 \begin{frame}
   \frametitle{Crates, Modules and Packages}
+  Rust have features that helps organize code.
+
+  \begin{itemize}
+    \item{Packages: A cargo feature that lets you build, test and share crates. A new package is created when \inlinecode{cargo new} is used. It contains a \emph{Cargo.toml} file.}
+    \item{Crates: There are two main types, library and binary crates. It can be made out of several modules and there can be multiple crates per package. A binary crates have a main function and compiles into an executable. A library create doesn't have a main function and are meant to share code between projects. Each package can have multiple binary crate but only one library crate.}
+    \item{Modules: Modules are used to control privacy of paths and what external crates and modules can see.}
+    \item{Paths: It is a way of naming an item, structs, enums, functions and module.}
+  \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Installing Crate from crates.io}
+  External packages can be installed to the current package. There are a few ways to do this, adding it in Cargo.toml or use \inlinecode{cargo add $package\_name$}.
+
+  There are various crates that are avaiable to \href{crates.io}{crates.io}. A list of amazing packages used for embedded Rust can also be found at \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust}
+
+\begin{lstlisting}[caption={Adding Dependencies in Cargo.toml}, language=toml]
+[dependencies]
+...
+hd44780-driver = "0.4.0"
+...
+\end{lstlisting}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile, allowframebreaks]
   \frametitle{LCD Library}
+  Luckily there is a crate for interfacing with the LCD in crates.io and it is called hd44780-driver. To install it type in \inlinecode{cargo add hd44780-driver}.
+
+  To bring it into path do:
+\begin{lstlisting}[]
+...
+use hd44780_driver::HD44780;
+...
+\end{lstlisting}
+
+  \pagebreak
+
+  Now we can use the library to display ``Hello, world! '' on our LCD:\@
+
+\begin{lstlisting}[]
+...
+let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).unwrap();
+
+// Unshift display and set cursor to 0
+lcd.reset(&mut delay).unwrap();
+
+// Clear existing characters
+lcd.clear(&mut delay).unwrap();
+
+// Display the following string
+lcd.write_str("Hello, world!", &mut delay).unwrap();
+...
+\end{lstlisting}
 \end{frame}
 
 \section{Error Handling}
