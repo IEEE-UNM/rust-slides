@@ -212,9 +212,25 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \end{frame}
 
 \section{Enums}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Enums}
+  Enums can be used to limit what values a given value is allowed to be. A value of given enum type must belong to the set of allowed value in the enum.
 
+  \lstinputlisting[caption={Example declaration of a new enum type.}, linerange={0 -6}]{enums.rs}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Enum Values}
+  Instances of the enum variant (values) can be created using the \inlinecode{::} operator.
+
+  \lstinputlisting[linerange={13 -16}]{enums.rs}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Enum Methods}
+  Enums can have methods just like structs. This can be used to create instances or methods of each instance.
+
+  \lstinputlisting[linerange={8 -10, 25 -26}]{enums.rs}
 \end{frame}
 
 \section{Structs}
