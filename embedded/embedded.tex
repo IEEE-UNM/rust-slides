@@ -34,7 +34,7 @@
 
   There are various crates that are avaiable to \href{crates.io}{crates.io}. A list of amazing packages used for embedded Rust can also be found at \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust}
 
-\begin{lstlisting}[caption={Adding Dependencies in Cargo.toml}, language=toml]
+\begin{lstlisting}[caption={Adding Dependencies in Cargo.toml}]
 [dependencies]
 ...
 hd44780-driver = "0.4.0"
@@ -76,15 +76,139 @@ lcd.write_str("Hello, world!", &mut delay).unwrap();
 \section{Error Handling}
 \begin{frame}
   \frametitle{Types of Errors}
+  Errors are bound to happen in programs. Rust provides several ways of handling errors. Rust errors are seperated into two different types:
+  \begin{itemize}
+    \item{Recoverable Errors:
+
+          These errors won't cause the program to crash and usually used to report the problem to the programmer. Examples of recoverable errors are failing to read a file.}
+    \item{Unrecoverable Errors:
+
+          These errors are caused by bugs in the program such as accessing invalid memory. This will immediatly stop the program from running and ``panic''.}
+  \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Irrecoverable Errors}
+\begin{frame}[allowframebreaks, fragile]
+  \frametitle{Unrecoverable Errors}
+  Unrecoverable errors would cuase the program to panic. There are two main ways a Rust would panic in practice. The first is using the \inlinecode{panic!} macro and the second is writing code that causes code to panic such as indexing array past the end.
+  \lstinputlisting{panic.rs}
+  Normally, Rust will clean up the stack when it panics. However, for minumum binary sizes, embedded Rust programs will just abort or have a seperate function that handles the panic.
+
+  \pagebreak
+
+  To abort on panic add this to Cargo.toml:
+
+\begin{lstlisting}
+[profile.release]
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}
   \frametitle{Recoverable Errors}
+  If the error isn't as serious and can be easily responded to such as opening a file because you don't have the permission to read it.
 
+  There are two types of recoverable errors.
+  \begin{itemize}
+    \item{\inlinecode{Result<T, E>} to propagate or return errors}
+    \item{\inlinecode{Option<T>} to store optional values and simple errors.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]
+  \frametitle[]{Handling Recoverable Errrors}
+  The most common way to handle this kind of errors are using \inlinecode{match} statements.
+
+\begin{lstlisting}
+match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
+    Ok(mut lcd) => lcd.write_str("Hello World!", &mut delay).unwrap(),
+    Err(_) => {
+        let mut led = pins.d13.into_output();
+        loop {
+            led.toggle();
+            delay.delay_us(1000_u32);
+        }
+    }
+}
+\end{lstlisting}
+
+\pagebreak
+
+\inlinecode{Result<T, E>} and \inlinecode{Option<T>} has many methods such as \inlinecode{unwrap\_or\_else} which takes in a function with a single parameter the error. This function would be ran if the output is and error otherwise the value \inlinecode{T} will be returned.
+
+\begin{lstlisting}
+    let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).unwrap_or_else(|_| {
+        let mut led = pins.d13.into_output();
+        loop {
+            led.toggle();
+            delay.delay_us(100000_u32);
+        }
+    });
+
+    // Display the following string
+    lcd.write_str("Hello, world!", &mut delay).unwrap();
+\end{lstlisting}
+
+\pagebreak
+
+Often times programmers want the program to panic when an error occured. This can be done using the \inlinecode{unwrap} and \inlinecode{expect} method. Both methods causes the program to panic, but in \inlinecode{expect} a custome error message is specified as a parameter.
+
+\begin{lstlisting}
+    let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).expect(``Cannot create LCD'');
+
+    // Unshift display and set cursor to 0
+    lcd.reset(&mut delay).unwrap();
+
+    // Clear existing characters
+    lcd.clear(&mut delay).unwrap();
+
+    // Display the following string
+    lcd.write_str("Hello, world!", &mut delay).unwrap();
+\end{lstlisting}
+
+\pagebreak
+
+There are many other ways to handle a recoverable error.
+\begin{itemize}
+  \item{\inlinecode{unwrap\_or} method returns the value specified in the method.}
+  \item{\inlinecode{unwrap\_or\_default} method returns the default value when there is an error.}
+  \item{\inlinecode{is\_ok} and \inlinecode{is\_some} or simillar methods to check if it is error or not and use \inlinecode{unwrap} safely.}
+  \item{\inlinecode{if let} expressions and only execute code when the pattern of value or error is matched.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]
+  \frametitle{Propagating Errors}
+  Recoverable errors can be propagated/moved through functions.
+
+\begin{lstlisting}
+fn print_hello<T: hd44780_driver::bus::DataBus>(
+    lcd: &mut HD44780<T>,
+    delay: &mut Delay,
+) -> Result<u8, hd44780_driver::error::Error> {
+    match lcd.write_str("Hello", delay) {
+        Ok(_) => Ok(69_u8),
+        Err(err) => Err(err),
+    }
+}
+\end{lstlisting}
+
+  \pagebreak
+
+  The \inlinecode{?} operator helps simplify the the code and act as a shortcut to return the error if there is one and continue running the code if there is none.
+
+\begin{lstlisting}
+fn print_hello<T: hd44780_driver::bus::DataBus>(
+    lcd: &mut HD44780<T>,
+    delay: &mut Delay,
+) -> Result<u8, hd44780_driver::error::Error> {
+    lcd.clear(delay)?;
+    lcd.write_str("Hello", delay)?;
+    Ok(69_u8)
+}
+\end{lstlisting}
 \end{frame}
 
 \section{Enums}
@@ -128,5 +252,7 @@ lcd.write_str("Hello, world!", &mut delay).unwrap();
 \subsection<presentation>*{Additional Resources}
 \begin{frame}[allowframebreaks, label={Additional Resources}]
   \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust}
+  \href{https://doc.rust-lang.org/std/result/index.html}{\inlinecode{Result<T, E>} documentation}
+  \href{https://doc.rust-lang.org/std/option/index.html}{\inlinecode{Option<T>} documentation}
 \end{frame}
 \end{document}
