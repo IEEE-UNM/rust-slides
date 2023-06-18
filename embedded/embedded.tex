@@ -226,17 +226,59 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
   \lstinputlisting[linerange={13 -16}]{enums.rs}
 \end{frame}
 
+\section{Structs}
+\begin{frame}
+  \frametitle{Structs}
+  Structs are used to group multiple related values together using names. A struct is used to implement object oriented programming (OOP) design pattern in Rust. We can use structs to hold our game.
+  \lstinputlisting[linerange={32 -43}]{src/game.rs}
+\end{frame}
+
+\subsection{Associated Functions}
+\begin{frame}
+  \frametitle{Associated Functions}
+  One of a feature of OOP is a data structure that contains data and behavior. There are three types of associated functions.
+  \begin{itemize}
+    \item Instance Methods
+    \item Mutable Instance Methods
+    \item Non-method Associative Functions
+  \end{itemize}
+  Associated functions can be defined using and \inlinecode{impl} block. To define an associated function for our \inlinecode{ScrollingGame} struct we start with an \inlinecode{impl} keyword followed by the struct's name \inlinecode{ScrollingGame}. Then we use curly braces to specify the range of our block.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Instance Methods}
+  Defining an instance method for a struct is simillar to defining a function. Unlike normal functions, methods have \inlinecode{\&self} or \inlinecode{self: \&Self} as the first parameter. The \inlinecode{Self} type can be used as an alias to the structs we are implementing the associated function.
+  \lstinputlisting[linerange={45,298 -}]{src/game.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Mutable Instance Methods}
+  A mutable instance method is simillar to normal instance except the struct must be declared as mutable for it to be used. Instead of using \inlinecode{\&self} it takes \inlinecode{\&mut self} as the first parameter.
+  \lstinputlisting[linerange={45,268 -278,301}]{src/game.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Non-method Functions}
+  Functions inside an \inlinecode{impl} block doesn't need to have \inlinecode{\&self} as their first parameter. These are usually used as constructor called \inlinecode{new}. However it isn't limited to only creating constructors. Non-method
+  \lstinputlisting[linerange={45,86 -94,301}]{src/game.rs}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Calling Associative Functions}
+  Calling methods are simillar to other OOP languages. First, create an instance of the struct and add \inlinecode{.} followed by the method being called.
+  \lstinputlisting[linerange={60 -63}]{src/main.rs}
+
+  \pagebreak
+
+  Calling non-methods are slightly different than calling methods. To call an non-method function the \inlinecode{::} syntax is used instead.
+  \lstinputlisting[linerange={58}]{src/main.rs}
+\end{frame}
+
 \begin{frame}[fragile]
   \frametitle{Enum Methods}
   Enums can have methods just like structs. This can be used to create instances or methods of each instance.
 
-  \lstinputlisting[linerange={8 -10, 25 -26}]{enums.rs}
-\end{frame}
-
-\section{Structs}
-\begin{frame}
-  \frametitle{Structs}
-
+  \lstinputlisting[linerange={16,33,34,51-}]{src/direction.rs}
 \end{frame}
 
 \section{RAII and Borrow Checker}
