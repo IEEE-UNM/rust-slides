@@ -16,9 +16,7 @@
 \end{frame}
 
 \section{Installing Crates}
-\begin{frame}
-  \frametitle{Crates, Modules and Packages}
-  Rust have features that helps organize code.
+\begin{frame} \frametitle{Crates, Modules and Packages} Rust have features that helps organize code.
 
   \begin{itemize}
     \item{Packages: A cargo feature that lets you build, test and share crates. A new package is created when \inlinecode{cargo new} is used. It contains a \emph{Cargo.toml} file.}
@@ -283,25 +281,63 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 
 \section{RAII and Borrow Checker}
 \begin{frame}
+  \frametitle{RAII}
+  Resource Aquistion is Initialization (RAII) is used to describe a programming behavior in which memory is allocated when the object is being created. While the object is still being used, the memory is kept until the object is no longer being used. Thefore, RAII ensures no memory leaks if there are no object leaks.
+\end{frame}
+
+\begin{frame}
   \frametitle{Ownership}
+  RAII is used most prominantly in C++. However, it forms the basis of how Rust managed it's memory through the idea of ownership.
 
+  There are a few rules regarding ownership:
+  \begin{itemize}
+    \item Each value in Rust has an owner.
+    \item There can only have \alert{one} owner of the value at a time.
+    \item When the owner of the value went out of scope, the value is destroyed.
+  \end{itemize}
+
+  A scope can be think of as anything within curly brackets is one scope. However, there are other scopes such as static which is valid for the entire runtime of the program.
 \end{frame}
 
-\begin{frame}
+\begin{frame}[allowframebreaks]
+  \frametitle{Moving}
+  The ownership of a value can be ``moved''. The ``owners'' of the values can be moved in serveral ways. One of the most common way is assigning the value to a new variable.
+
+  \lstinputlisting[linerange=41-44]{src/main.rs}
+
+  \alert{Note} that after the ownership have been moved, the previous owner can no longer used the moved value (values can only have one owner).
+
+  \pagebreak
+
+  Ownership transfers works simillar with functions and methods as well. It can be moved into and out of a function.
+  \lstinputlisting[linerange=88-, caption={Function that takes ownership.}]{src/lib.rs}
+  \lstinputlisting[linerange=45-47, caption={Functions taking ownership usage.}]{src/main.rs}
+
+  \pagebreak
+  \lstinputlisting[linerange=85-94, caption={Associated function gives ownership.}]{src/game.rs}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Clone and Copy}
+  Some variable types provides a \inlinecode{clone} method. This will do a deep copy of a variable. This will allow the old owner to still have ownership of the value while the new owner get the copy/clone of the value.
+
+  Some variable types can be \inlinecode{Copy} usually for stack only data such as integers or floats.
+\begin{lstlisting}
+let x = 69;
+let y = x;
+println!("x: {}, y: {}", x, y);
+\end{lstlisting}
+  This is due to the fact that stack only data can be copied as they are only stored on the stack. While deep copies might take a longer period of time to create.
+\end{frame}
+
+\begin{frame}[allowframebreaks]
   \frametitle{Borrowing}
+  If the programmer wanted to used a value in a function but still continue using the value outside. The value must be moved into and out of the function. Instead of moving the value, a reference of the value can be used instead. This is called reference ``borrowing''. It can be done by adding \inlinecode{\&} before the value and type.
+  \lstinputlisting[linerange=298-300, caption={Methods taking reference to the object.}]{src/game.rs}
 
-\end{frame}
-
-\section{Traits}
-\begin{frame}
-  \frametitle{Traits}
-
-\end{frame}
-
-\section{Generics}
-\begin{frame}
-  \frametitle{Generics}
-
+  \pagebreak
+  A mutable borrow is also allowed. Instead of \inlinecode{\&} \inlinecode{\&mut} is used instead.
+  \lstinputlisting[linerange=77-85]{src/lib.rs}
 \end{frame}
 
 % All of the following is optional and typically not needed.
