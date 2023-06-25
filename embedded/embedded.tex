@@ -264,12 +264,12 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \begin{frame}[allowframebreaks]
   \frametitle{Calling Associative Functions}
   Calling methods are simillar to other OOP languages. First, create an instance of the struct and add \inlinecode{.} followed by the method being called.
-  \lstinputlisting[linerange={60 -63}]{src/main.rs}
+  \lstinputlisting[linerange={41-45}]{src/lib.rs}
 
   \pagebreak
 
   Calling non-methods are slightly different than calling methods. To call an non-method function the \inlinecode{::} syntax is used instead.
-  \lstinputlisting[linerange={58}]{src/main.rs}
+  \lstinputlisting[linerange={88}]{src/main.rs}
 \end{frame}
 
 \begin{frame}[fragile]
