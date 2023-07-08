@@ -15,7 +15,8 @@
 
 \end{frame}
 
-\section{Installing Crates}
+\section{Packages and Crates}
+\subsection{The Module System}
 \begin{frame} \frametitle{Crates, Modules and Packages} Rust have features that helps organize code.
 
   \begin{itemize}
@@ -26,6 +27,81 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Binary and Library Crates}
+  {\fontsize{15pt}{18pt}\selectfont Library Crates}
+
+  A library crate is declared in \inlinecode{src/lib.rs} file. It can be used by other binary crates in the same package.
+
+  {\fontsize{15pt}{18pt}\selectfont Binary Crates}
+
+  A binary crate is declared in \inlinecode{src/main.rs}. This is the main binary crate and will be compiled to a binary with the same name as the package. Other additional binaries can be added in \inlinecode{src/bin/}. The compiled binary would be the same name as the file but with an exectuable extention instead of \inlinecode{.rs}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modules and Submodules}
+  Modules are a way to group related code together. Modules can be declared using the \inlinecode{mod} keyword followed by the modules name.
+
+  There are three ways to define modules:
+  \begin{itemize}
+    \item Inline inside curly brackets right after declaration.
+    \item In the file \inlinecode{src/\emph{module\_name}.rs}
+    \item In the file \inlinecode{src/\emph{module\_name}/mod.rs} (legacy)
+  \end{itemize}
+
+  Submodules can also be defined in modules. They are defined simillar to how you define modules:
+  \begin{itemize}
+    \item Inline inside curly brackets right after declaration.
+    \item In the file \inlinecode{src/\emph{module\_name}/\emph{submodule\_name}.rs}
+    \item In the file \inlinecode{src/\emph{module\_name}/\emph{submodule\_name}/mod.rs} (legacy)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Privacy and Visibility}
+  By default code inside of modules and submodules are invisible to the module/crate (parents) that declared it. Any code can be made visible/public to the parent by adding the \inlinecode{pub} keyword in the declaration of the code.
+
+  \lstinputlisting[linerange={15,16},caption={Making modules public}]{src/lib.rs}
+
+  \alert{Note}: Making \inlinecode{struct}s public only makes the \inlinecode{struct} public but not the fields. The fields must be made public individually.
+
+  \alert{Note}: Making \inlinecode{enum}s public also makes the variants of the \inlinecode{enum} public.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Paths}
+  Every piece of code/item e.g. functions, variables and stucts written in a module or crate have their own unique ``path ''to access them.
+  A path is made out of one or more identifiers followed by \inlinecode{::}.
+
+  There are two types of paths:
+  \begin{itemize}
+    \item{Absolute Path: Starts from the root of the crate/external crates. It uses the crate name or the word ``crate'' to refer to the current crate.}
+    \item{Relative Path: Starts from the current module. It uses the \inlinecode{self} or and identifier to start from the current module. \inlinecode{super} can be used to start from the parent crate.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Absolute Paths}
+  \lstinputlisting[linerange={74,75}, caption={Absolute paths from external crates.}]{src/main.rs}
+  \lstinputlisting[linerange={98,99}, caption={Absolute paths from the same crates.}]{src/lib.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Relative Paths}
+  \lstinputlisting[linerange={109,110}, caption={Relative paths using \inlinecode{super}.}]{src/lib.rs}
+  \lstinputlisting[linerange={111,112}, caption={Relative paths from the module.}]{src/lib.rs}
+  \lstinputlisting[linerange={124,125}, caption={Relative paths using \inlinecode{self}.}]{src/lib.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The \inlinecode{use} Keyword}
+  As the crates gets more and more complex with many modules and submodules, it might be inconvinient or tedious to call a function using relative or absolute paths. A path can be brought into a scope and acts as a shortcut to the path.
+
+  This can be done by using the \inlinecode{use} keyword followed by the path to the identifier. Once a path is brought into scope, it can be used like it is defined in the same module scope.
+  \lstinputlisting[linerange={16,19-20,71,88-89}, caption={Brining \inlinecode{ScollingGame} into scope.}]{src/main.rs}
+\end{frame}
+
+\subsection{Installing External Libraries}
 \begin{frame}[fragile]
   \frametitle{Installing Crate from crates.io}
   External packages can be installed to the current package. There are a few ways to do this, adding it in Cargo.toml or use \inlinecode{cargo add $package\_name$}.
