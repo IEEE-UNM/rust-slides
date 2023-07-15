@@ -30,6 +30,11 @@ basics.pdf: basics/basics.tex
 	cd basics/ && $(PDFLATEX) basics.tex
 	$(CLEANARTIFACTS)
 
+embedded.pdf: embedded/embedded.tex
+	mkdir -p $(OUTPUTDIR)
+	cd embedded/ && $(PDFLATEX) basics.tex
+	$(CLEANARTIFACTS)
+
 .PHONY: clean
 clean:
 	rm -rf $(OUTPUTDIR)

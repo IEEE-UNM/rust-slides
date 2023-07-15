@@ -1,0 +1,375 @@
+\documentclass{beamer}
+
+\input{../shared/rust-slides-style.tex}
+
+\title{Embedded Rust}
+
+\begin{document}
+\begin{frame}
+  \titlepage{}
+\end{frame}
+
+\section{Blinky}
+\begin{frame}
+  \frametitle{Blinky}
+
+\end{frame}
+
+\section{Installing Crates}
+\begin{frame} \frametitle{Crates, Modules and Packages} Rust have features that helps organize code.
+
+  \begin{itemize}
+    \item{Packages: A cargo feature that lets you build, test and share crates. A new package is created when \inlinecode{cargo new} is used. It contains a \emph{Cargo.toml} file.}
+    \item{Crates: There are two main types, library and binary crates. It can be made out of several modules and there can be multiple crates per package. A binary crates have a main function and compiles into an executable. A library create doesn't have a main function and are meant to share code between projects. Each package can have multiple binary crate but only one library crate.}
+    \item{Modules: Modules are used to control privacy of paths and what external crates and modules can see.}
+    \item{Paths: It is a way of naming an item, structs, enums, functions and module.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Installing Crate from crates.io}
+  External packages can be installed to the current package. There are a few ways to do this, adding it in Cargo.toml or use \inlinecode{cargo add $package\_name$}.
+
+  There are various crates that are avaiable to \href{crates.io}{crates.io}. A list of amazing packages used for embedded Rust can also be found at \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust}
+
+\begin{lstlisting}[caption={Adding Dependencies in Cargo.toml}]
+[dependencies]
+...
+hd44780-driver = "0.4.0"
+...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]
+  \frametitle{LCD Library}
+  Luckily there is a crate for interfacing with the LCD in crates.io and it is called hd44780-driver. To install it type in \inlinecode{cargo add hd44780-driver}.
+
+  To bring it into path do:
+\begin{lstlisting}[]
+...
+use hd44780_driver::HD44780;
+...
+\end{lstlisting}
+
+  \pagebreak
+
+  Now we can use the library to display ``Hello, world! '' on our LCD:\@
+
+\begin{lstlisting}[]
+...
+let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).unwrap();
+
+// Unshift display and set cursor to 0
+lcd.reset(&mut delay).unwrap();
+
+// Clear existing characters
+lcd.clear(&mut delay).unwrap();
+
+// Display the following string
+lcd.write_str("Hello, world!", &mut delay).unwrap();
+...
+\end{lstlisting}
+\end{frame}
+
+\section{Error Handling}
+\begin{frame}
+  \frametitle{Types of Errors}
+  Errors are bound to happen in programs. Rust provides several ways of handling errors. Rust errors are seperated into two different types:
+  \begin{itemize}
+    \item{Recoverable Errors:
+
+          These errors won't cause the program to crash and usually used to report the problem to the programmer. Examples of recoverable errors are failing to read a file.}
+    \item{Unrecoverable Errors:
+
+          These errors are caused by bugs in the program such as accessing invalid memory. This will immediatly stop the program from running and ``panic''.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks, fragile]
+  \frametitle{Unrecoverable Errors}
+  Unrecoverable errors would cuase the program to panic. There are two main ways a Rust would panic in practice. The first is using the \inlinecode{panic!} macro and the second is writing code that causes code to panic such as indexing array past the end.
+  \lstinputlisting{panic.rs}
+  Normally, Rust will clean up the stack when it panics. However, for minumum binary sizes, embedded Rust programs will just abort or have a seperate function that handles the panic.
+
+  \pagebreak
+
+  To abort on panic add this to Cargo.toml:
+
+\begin{lstlisting}
+[profile.release]
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recoverable Errors}
+  If the error isn't as serious and can be easily responded to such as opening a file because you don't have the permission to read it.
+
+  There are two types of recoverable errors.
+  \begin{itemize}
+    \item{\inlinecode{Result<T, E>} to propagate or return errors}
+    \item{\inlinecode{Option<T>} to store optional values and simple errors.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]
+  \frametitle[]{Handling Recoverable Errrors}
+  The most common way to handle this kind of errors are using \inlinecode{match} statements.
+
+\begin{lstlisting}
+match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
+    Ok(mut lcd) => lcd.write_str("Hello World!", &mut delay).unwrap(),
+    Err(_) => {
+        let mut led = pins.d13.into_output();
+        loop {
+            led.toggle();
+            delay.delay_us(1000_u32);
+        }
+    }
+}
+\end{lstlisting}
+
+\pagebreak
+
+\inlinecode{Result<T, E>} and \inlinecode{Option<T>} has many methods such as \inlinecode{unwrap\_or\_else} which takes in a function with a single parameter the error. This function would be ran if the output is and error otherwise the value \inlinecode{T} will be returned.
+
+\begin{lstlisting}
+    let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).unwrap_or_else(|_| {
+        let mut led = pins.d13.into_output();
+        loop {
+            led.toggle();
+            delay.delay_us(100000_u32);
+        }
+    });
+
+    // Display the following string
+    lcd.write_str("Hello, world!", &mut delay).unwrap();
+\end{lstlisting}
+
+\pagebreak
+
+Often times programmers want the program to panic when an error occured. This can be done using the \inlinecode{unwrap} and \inlinecode{expect} method. Both methods causes the program to panic, but in \inlinecode{expect} a custome error message is specified as a parameter.
+
+\begin{lstlisting}
+    let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).expect(``Cannot create LCD'');
+
+    // Unshift display and set cursor to 0
+    lcd.reset(&mut delay).unwrap();
+
+    // Clear existing characters
+    lcd.clear(&mut delay).unwrap();
+
+    // Display the following string
+    lcd.write_str("Hello, world!", &mut delay).unwrap();
+\end{lstlisting}
+
+\pagebreak
+
+There are many other ways to handle a recoverable error.
+\begin{itemize}
+  \item{\inlinecode{unwrap\_or} method returns the value specified in the method.}
+  \item{\inlinecode{unwrap\_or\_default} method returns the default value when there is an error.}
+  \item{\inlinecode{is\_ok} and \inlinecode{is\_some} or simillar methods to check if it is error or not and use \inlinecode{unwrap} safely.}
+  \item{\inlinecode{if let} expressions and only execute code when the pattern of value or error is matched.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]
+  \frametitle{Propagating Errors}
+  Recoverable errors can be propagated/moved through functions.
+
+\begin{lstlisting}
+fn print_hello<T: hd44780_driver::bus::DataBus>(
+    lcd: &mut HD44780<T>,
+    delay: &mut Delay,
+) -> Result<u8, hd44780_driver::error::Error> {
+    match lcd.write_str("Hello", delay) {
+        Ok(_) => Ok(69_u8),
+        Err(err) => Err(err),
+    }
+}
+\end{lstlisting}
+
+  \pagebreak
+
+  The \inlinecode{?} operator helps simplify the the code and act as a shortcut to return the error if there is one and continue running the code if there is none.
+
+\begin{lstlisting}
+fn print_hello<T: hd44780_driver::bus::DataBus>(
+    lcd: &mut HD44780<T>,
+    delay: &mut Delay,
+) -> Result<u8, hd44780_driver::error::Error> {
+    lcd.clear(delay)?;
+    lcd.write_str("Hello", delay)?;
+    Ok(69_u8)
+}
+\end{lstlisting}
+\end{frame}
+
+\section{Enums}
+\begin{frame}[fragile]
+  \frametitle{Enums}
+  Enums can be used to limit what values a given value is allowed to be. A value of given enum type must belong to the set of allowed value in the enum.
+
+  \lstinputlisting[caption={Example declaration of a new enum type.}, linerange={0 -6}]{enums.rs}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Enum Values}
+  Instances of the enum variant (values) can be created using the \inlinecode{::} operator.
+
+  \lstinputlisting[linerange={13 -16}]{enums.rs}
+\end{frame}
+
+\section{Structs}
+\begin{frame}
+  \frametitle{Structs}
+  Structs are used to group multiple related values together using names. A struct is used to implement object oriented programming (OOP) design pattern in Rust. We can use structs to hold our game.
+  \lstinputlisting[linerange={32 -43}]{src/game.rs}
+\end{frame}
+
+\subsection{Associated Functions}
+\begin{frame}
+  \frametitle{Associated Functions}
+  One of a feature of OOP is a data structure that contains data and behavior. There are three types of associated functions.
+  \begin{itemize}
+    \item Instance Methods
+    \item Mutable Instance Methods
+    \item Non-method Associative Functions
+  \end{itemize}
+  Associated functions can be defined using and \inlinecode{impl} block. To define an associated function for our \inlinecode{ScrollingGame} struct we start with an \inlinecode{impl} keyword followed by the struct's name \inlinecode{ScrollingGame}. Then we use curly braces to specify the range of our block.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Instance Methods}
+  Defining an instance method for a struct is simillar to defining a function. Unlike normal functions, methods have \inlinecode{\&self} or \inlinecode{self: \&Self} as the first parameter. The \inlinecode{Self} type can be used as an alias to the structs we are implementing the associated function.
+  \lstinputlisting[linerange={45,298 -}]{src/game.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Mutable Instance Methods}
+  A mutable instance method is simillar to normal instance except the struct must be declared as mutable for it to be used. Instead of using \inlinecode{\&self} it takes \inlinecode{\&mut self} as the first parameter.
+  \lstinputlisting[linerange={45,268 -278,301}]{src/game.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Non-method Functions}
+  Functions inside an \inlinecode{impl} block doesn't need to have \inlinecode{\&self} as their first parameter. These are usually used as constructor called \inlinecode{new}. However it isn't limited to only creating constructors. Non-method
+  \lstinputlisting[linerange={45,86 -94,301}]{src/game.rs}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Calling Associative Functions}
+  Calling methods are simillar to other OOP languages. First, create an instance of the struct and add \inlinecode{.} followed by the method being called.
+  \lstinputlisting[linerange={41-45}]{src/lib.rs}
+
+  \pagebreak
+
+  Calling non-methods are slightly different than calling methods. To call an non-method function the \inlinecode{::} syntax is used instead.
+  \lstinputlisting[linerange={88}]{src/main.rs}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Enum Methods}
+  Enums can have methods just like structs. This can be used to create instances or methods of each instance.
+
+  \lstinputlisting[linerange={16,33,34,51-}]{src/direction.rs}
+\end{frame}
+
+\section{RAII and Borrow Checker}
+\begin{frame}
+  \frametitle{RAII}
+  Resource Aquistion is Initialization (RAII) is used to describe a programming behavior in which memory is allocated when the object is being created. While the object is still being used, the memory is kept until the object is no longer being used. Thefore, RAII ensures no memory leaks if there are no object leaks.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ownership}
+  RAII is used most prominantly in C++. However, it forms the basis of how Rust managed it's memory through the idea of ownership.
+
+  There are a few rules regarding ownership:
+  \begin{itemize}
+    \item Each value in Rust has an owner.
+    \item There can only have \alert{one} owner of the value at a time.
+    \item When the owner of the value went out of scope, the value is destroyed.
+  \end{itemize}
+
+  A scope can be think of as anything within curly brackets is one scope. However, there are other scopes such as static which is valid for the entire runtime of the program.
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Moving}
+  The ownership of a value can be ``moved''. The ``owners'' of the values can be moved in serveral ways. One of the most common way is assigning the value to a new variable.
+
+  \lstinputlisting[linerange=41-44]{src/main.rs}
+
+  \alert{Note} that after the ownership have been moved, the previous owner can no longer used the moved value (values can only have one owner).
+
+  \pagebreak
+
+  Ownership transfers works simillar with functions and methods as well. It can be moved into and out of a function.
+  \lstinputlisting[linerange=88-, caption={Function that takes ownership.}]{src/lib.rs}
+  \lstinputlisting[linerange=45-47, caption={Functions taking ownership usage.}]{src/main.rs}
+
+  \pagebreak
+  \lstinputlisting[linerange=85-94, caption={Associated function gives ownership.}]{src/game.rs}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Clone and Copy}
+  Some variable types provides a \inlinecode{clone} method. This will do a deep copy of a variable. This will allow the old owner to still have ownership of the value while the new owner get the copy/clone of the value.
+
+  Some variable types can be \inlinecode{Copy} usually for stack only data such as integers or floats.
+\begin{lstlisting}
+let x = 69;
+let y = x;
+println!("x: {}, y: {}", x, y);
+\end{lstlisting}
+  This is due to the fact that stack only data can be copied as they are only stored on the stack. While deep copies might take a longer period of time to create.
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Borrowing}
+  If the programmer wanted to used a value in a function but still continue using the value outside. The value must be moved into and out of the function. Instead of moving the value, a reference of the value can be used instead. This is called reference ``borrowing''. It can be done by adding \inlinecode{\&} before the value and type.
+  \lstinputlisting[linerange=298-300, caption={Methods taking reference to the object.}]{src/game.rs}
+
+  \pagebreak
+  A mutable borrow is also allowed. Instead of \inlinecode{\&} \inlinecode{\&mut} is used instead.
+  \lstinputlisting[linerange=77-85]{src/lib.rs}
+\end{frame}
+
+% \section{Traits}
+% \begin{frame}
+%   \frametitle{Traits}
+
+% \end{frame}
+
+% \section{Generics}
+% \begin{frame}
+%   \frametitle{Generics}
+
+% \end{frame}
+
+% All of the following is optional and typically not needed.
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Additional Resources}
+\begin{frame}[allowframebreaks, label={Additional Resources}]
+  \begin{itemize}
+    \item \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust}
+    \item \href{https://doc.rust-lang.org/std/result/index.html}{\inlinecode{Result<T, E>} documentation}
+    \item \href{https://doc.rust-lang.org/std/option/index.html}{\inlinecode{Option<T>} documentation}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks, label={Additional Rust Features}]
+  \frametitle{Additional Rust Features}
+  \begin{itemize}
+    \item Traits
+    \item Generics
+    \item Lifetimes
+  \end{itemize}
+\end{frame}
+\end{document}
