@@ -227,7 +227,7 @@ match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
 
 \pagebreak
 
-Often times programmers want the program to panic when an error occured. This can be done using the \inlinecode{unwrap} and \inlinecode{expect} method. Both methods causes the program to panic, but in \inlinecode{expect} a custome error message is specified as a parameter.
+Often times programmers want the program to panic when an error occured. This can be done using the \inlinecode{unwrap} and \inlinecode{expect} method. Both methods causes the program to panic, but in \inlinecode{expect} a custom error message is specified as a parameter.
 
 \begin{lstlisting}
     let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).expect(``Cannot create LCD'');
@@ -322,19 +322,19 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \begin{frame}
   \frametitle{Instance Methods}
   Defining an instance method for a struct is simillar to defining a function. Unlike normal functions, methods have \inlinecode{\&self} or \inlinecode{self: \&Self} as the first parameter. The \inlinecode{Self} type can be used as an alias to the structs we are implementing the associated function.
-  \lstinputlisting[linerange={45,298 -}]{src/game.rs}
+  \lstinputlisting[linerange={45,303-306,312}]{src/game.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Mutable Instance Methods}
   A mutable instance method is simillar to normal instance except the struct must be declared as mutable for it to be used. Instead of using \inlinecode{\&self} it takes \inlinecode{\&mut self} as the first parameter.
-  \lstinputlisting[linerange={45,268 -278,301}]{src/game.rs}
+  \lstinputlisting[linerange={45,268-270,284,312}]{src/game.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Non-method Functions}
   Functions inside an \inlinecode{impl} block doesn't need to have \inlinecode{\&self} as their first parameter. These are usually used as constructor called \inlinecode{new}. However it isn't limited to only creating constructors. Non-method
-  \lstinputlisting[linerange={45,86 -94,301}]{src/game.rs}
+  \lstinputlisting[linerange={45,86-94,312}]{src/game.rs}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
@@ -345,7 +345,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
   \pagebreak
 
   Calling non-methods are slightly different than calling methods. To call an non-method function the \inlinecode{::} syntax is used instead.
-  \lstinputlisting[linerange={88}]{src/main.rs}
+  \lstinputlisting[linerange={71}]{src/main.rs}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -379,15 +379,15 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
   \frametitle{Moving}
   The ownership of a value can be ``moved''. The ``owners'' of the values can be moved in serveral ways. One of the most common way is assigning the value to a new variable.
 
-  \lstinputlisting[linerange=41-44]{src/main.rs}
+  \lstinputlisting[linerange=43-47]{src/main.rs}
 
   \alert{Note} that after the ownership have been moved, the previous owner can no longer used the moved value (values can only have one owner).
 
   \pagebreak
 
   Ownership transfers works simillar with functions and methods as well. It can be moved into and out of a function.
-  \lstinputlisting[linerange=88-, caption={Function that takes ownership.}]{src/lib.rs}
-  \lstinputlisting[linerange=45-47, caption={Functions taking ownership usage.}]{src/main.rs}
+  \lstinputlisting[linerange=88-94, caption={Function that takes ownership.}]{src/lib.rs}
+  \lstinputlisting[linerange=48-50, caption={Functions taking ownership usage.}]{src/main.rs}
 
   \pagebreak
   \lstinputlisting[linerange=85-94, caption={Associated function gives ownership.}]{src/game.rs}
@@ -409,11 +409,11 @@ println!("x: {}, y: {}", x, y);
 \begin{frame}[allowframebreaks]
   \frametitle{Borrowing}
   If the programmer wanted to used a value in a function but still continue using the value outside. The value must be moved into and out of the function. Instead of moving the value, a reference of the value can be used instead. This is called reference ``borrowing''. It can be done by adding \inlinecode{\&} before the value and type.
-  \lstinputlisting[linerange=298-300, caption={Methods taking reference to the object.}]{src/game.rs}
+  \lstinputlisting[linerange=129-132, caption={Methods taking reference to the object.}]{src/lib.rs}
 
   \pagebreak
   A mutable borrow is also allowed. Instead of \inlinecode{\&} \inlinecode{\&mut} is used instead.
-  \lstinputlisting[linerange=77-85]{src/lib.rs}
+  \lstinputlisting[linerange=77-86]{src/lib.rs}
 \end{frame}
 
 % \section{Traits}
