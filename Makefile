@@ -10,7 +10,7 @@ PDFLATEX = pdflatex -output-directory=../$(OUTPUTDIR)
 CLEANARTIFACTS = find $(OUTPUTDIR) -not -iname "*.pdf" -not -name "$(OUTPUTDIR)"|xargs rm
 
 .PHONY: all
-all: setup.pdf basics.pdf
+all: setup.pdf basics.pdf embedded.pdf
 
 .PHONY: zip
 zip: all
@@ -32,7 +32,7 @@ basics.pdf: basics/basics.tex
 
 embedded.pdf: embedded/embedded.tex
 	mkdir -p $(OUTPUTDIR)
-	cd embedded/ && $(PDFLATEX) basics.tex
+	cd embedded/ && $(PDFLATEX) embedded.tex
 	$(CLEANARTIFACTS)
 
 .PHONY: clean
