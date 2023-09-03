@@ -11,8 +11,126 @@
 
 \section{Blinky}
 \begin{frame}
-  \frametitle{Blinky}
+  \frametitle{Project Setup}
+  Before a MCU can be programmed, an appropriate Hardware Abstraction Layer (HAL) library/crate for the MCU needed to be used.
 
+  Often times to use the HAL some configuration and setup are needed to program the MCU. Some common setups includes:
+
+  \begin{itemize}
+    \item{Installing rustup target e.g. \inlinecode{thumbv7em-none-eabihf} for STM32 F4 boards}
+    \item{Installing required software/compiler}
+    \item{Change cargo runner (how cargo runs the compiled binary)}
+  \end{itemize}
+
+  \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust} provides a useful list of avaiable libraries/crates for embedded programming in Rust.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Project Folder Download}
+  \begin{center}
+    \includegraphics[width=.47\textwidth]{qrcode.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Blinky}
+  The \inlinecode{stm32f4xx-hal} library/crate is the go to HAL crate for STM32 F4 series MCU.
+
+  Setup Steps:
+
+  \begin{enumerate}
+    \item{Add target: \inlinecode{rustup target add thumbv7em-none-eabihf}}
+    \item{Install Runner: \inlinecode{cargo install probe-run}}
+    \item{Install Software: \inlinecode{cargo install flip-link}}
+  \end{enumerate}
+
+  Run it!:
+
+  \begin{enumerate}
+    \item{Open project directory}
+    \item{Ensure MCU is plugged in}
+    \item{Build and Run: \inlinecode{cargo run}}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Program Main Function and Setup}
+  An entry point needed to be defined to tell what the MCU what to execute when it resets.
+
+  \lstinputlisting[linerange={10-11,30}]{src/bin/blinky.rs}
+
+  Before we can setup any peripherals, we need to take the ownership of the peripherals.
+
+  \lstinputlisting[linerange={12}]{src/bin/blinky.rs}
+
+  Once the peripherals is setup a \inlinecode{loop} is used to execute code infinitely.
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Digital Pins}
+  A digital output pin can be used to output high and low on a GPIO pin. A digital pin must be setup as an output before it can be used. In \inlinecode{stm32f4xx-hal} a digital output can be setup by doing:
+  \lstinputlisting[linerange={14-15}]{src/bin/blinky.rs}
+
+  Eventhough the setup procdure might differ, most crates should have simillar/same functions to manipulate it.
+  \lstinputlisting[linerange={22}, caption={Set Digital Output to High}]{src/bin/blinky.rs}
+  \lstinputlisting[linerange={24}, caption={Set Digital Output to High}]{src/bin/blinky.rs}
+
+  A digital input is used to read digital signal. Setting up pins as a digital input is simillar to digital output:
+  \lstinputlisting[linerange={15-16}]{src/bin/digital-input.rs}
+
+  Two main methods can be used to read the digital input:
+  \lstinputlisting[linerange={22}, caption={Returns True if input is high}]{src/bin/digital-input.rs}
+  \lstinputlisting[linerange={23}, caption={Returns True if input is low}]{src/bin/digital-input.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Delay}
+  A delay can be used to block program execution for a specific amount of time. To setup a delay:
+  \lstinputlisting[linerange={17-19}]{src/bin/blinky.rs}
+
+  There are two different precision delays:
+  \lstinputlisting[linerange={23}, caption={Delay With Millisecond Precision}]{src/bin/blinky.rs}
+  \lstinputlisting[linerange={25}, caption={Delay With Microsecond Precision}]{src/bin/blinky.rs}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Analog Input}
+  An ADC can be used to read analog input. An ADC can be setup by doing:
+  \lstinputlisting[linerange={25-29}]{src/bin/adc.rs}
+
+  Both ADC temperature and GPIO pins can be used to read analog data.
+
+  A single sample temperature measurements can be done by doing:
+  \lstinputlisting[linerange={36}]{src/bin/adc.rs}
+
+  \pagebreak
+
+  Before a voltage value can be read the GPIO pin must be setup to used as analog input.
+  \lstinputlisting[linerange={21-22}]{src/bin/adc.rs}
+
+  A single sample can be taken by using convert method:
+  \lstinputlisting[linerange={33}]{src/bin/adc.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{USART/UART/Serial Port}
+  A serial monitor can be used to transfer data between the host computer and MCU. The UART/USART protocol is usually used for this purpose. To setup a USART for serial communication:
+  \lstinputlisting[linerange={17-20}]{src/bin/usart.rs}
+
+  A single ``word''/character can be read using the \inlinecode{read} method.
+  \lstinputlisting[linerange={23}]{src/bin/usart.rs}
+
+  To send data, the \inlinecode{write} method is used instead.
+  \lstinputlisting[linerange={27}]{src/bin/usart.rs}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Random Number Generator (RNG)}
+  The rand crate/library can be used to generate random numbers. The ADC temperature noise can be used a good enough random seed to for fill simple RNG purposes.
+  \lstinputlisting[linerange={31,32}]{src/bin/rng.rs}
+
+  To generate a random number, the gen method can be used with a type anotated variable:
+  \lstinputlisting[linerange={35}]{src/bin/rng.rs}
 \end{frame}
 
 \section{Packages and Crates}
