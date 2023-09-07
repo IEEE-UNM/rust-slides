@@ -26,10 +26,10 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}[fragile]
   \frametitle{Assigning Variable}
-  Often times, the Rust compiler can infer the type of the varible during compile time. Therefore specifying the type is not always nessary.
+  Often times, the Rust compiler can infer the type of the variable during compile time. Therefore, specifying the type is not always necessary.
   \lstinputlisting[language=Rust]{variable_assignment2.rs}
 
-  The compiler can also infer the type when the variable is declared first and then assign the a value at a later time. Just make sure a value is assigned to it before using it.
+  The compiler can also infer the type when the variable is declared first and then assign a value at a later time. Just make sure a value is assigned to it before using it.
   \lstinputlisting[language=Rust]{variable_assignment3.rs}
 \end{frame}
 
@@ -53,7 +53,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \begin{frame}
   \frametitle{Variable Shadowing}
   This two examples shows the difference between mutable variables and variable shadowing when assigning an integer first and a string slice later.
-  \lstinputlisting[caption=Comiple Error]{variable_shadowing2.rs}
+  \lstinputlisting[caption=Compile Error]{variable_shadowing2.rs}
   \lstinputlisting[caption=No Compile Error]{variable_shadowing3.rs}
 \end{frame}
 
@@ -65,7 +65,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{Statics}
-  Statics are simillar to constants. Static variables are valid for the entire lifetime of the program. Unlike constants, static variables can be mutable but accessing a mutable static variable requires it to be in an \inlinecode{unsafe} block. Static variables can be created by using the \inlinecode{'static} lifetime or string literals (any strings created by `` '') are always static variables.
+  Statics are similar to constants. Static variables are valid for the entire lifetime of the program. Unlike constants, static variables can be mutable but accessing a mutable static variable requires it to be in an \inlinecode{unsafe} block. Static variables can be created by using the \inlinecode{'static} lifetime or string literals (any strings created by `` '') are always static variables.
   \lstinputlisting{statics.rs}
 \end{frame}
 
@@ -74,22 +74,22 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
   \frametitle{println/print macro}
   Rust provides macros to help with printing to the standard output. In previous slides, the \inlinecode{println} macro is used, this macro would print the formatted string into the standard output.
   \lstinputlisting[caption={Prints `Hello, world\!' to standard output}]{println1.rs}
-  The \inlinecode{print} macro is simillar to \inlinecode{println} except it doesn't print a new line after the string.
+  The \inlinecode{print} macro is similar to \inlinecode{println} except it doesn't print a new line after the string.
 
-  \alert{Note:} Macro calls are different than functions calls talked in future chapter. Macro calls have an ``\!'' at the end of the macro name.
+  \alert{Note:} Macro calls are different from functions calls talked in future chapter. Macro calls have an ``\!'' at the end of the macro name.
 \end{frame}
 
 \begin{frame}
   \frametitle{Printing Variables}
   Strings can be formatted to print variables.
   \lstinputlisting{println2.rs}
-  There are also formatting options to control how the variable displayed such as controlling it's alignment and width the variable will take up.
+  There are also formatting options to control how the variable displayed such as controlling its alignment and width the variable will take up.
   \lstinputlisting[caption={Prints the variable to be center aligned and 10 characters wide}]{println3.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Print to Standard Error}
-  Rust provides macros to print to standard error as well. This is achived by using the \inlinecode{eprint} and \inlinecode{eprintln} macro. The syntax is simillar to the \inlinecode{print} and \inlinecode{println} macro.
+  Rust provides macros to print to standard error as well. This is achieved by using the \inlinecode{eprint} and \inlinecode{eprintln} macro. The syntax is similar to the \inlinecode{print} and \inlinecode{println} macro.
   \lstinputlisting{eprintln.rs}
 \end{frame}
 
@@ -144,6 +144,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
   Since Unicode is supported your favorite emoji works in Rust.
   % \lstinputlisting[caption=See Source File on GitHub for the Correct Emojis]{char.rs}
+  \lstinputlisting[caption=See Source File on GitHub for the Correct Emojis]{char2.rs}
 \end{frame}
 
 \subsection{Compound Types}
@@ -155,13 +156,13 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
   Each element in the array can be indexed using \inlinecode{[i]} where \inlinecode{i} is the index of the element.
   \lstinputlisting{array2.rs}
 
-  \alert{Note:} If an element outside of the array size is accessed, the program will ``panic''/crash. By default the compiler will fail to compile if it notices an access of an array that is out of bound. This example uses \inlinecode{\#[allow (unconditional{\_}panic)]} to allow it to compile. However if the index is more dynamic e.g.\ from user input, the compiler can't catch it.
+  \alert{Note:} If an element outside the array size is accessed, the program will ``panic''/crash. By default, the compiler will fail to compile if it notices access of an array that is out of bound. This example uses \inlinecode{\#[allow (unconditional{\_}panic)]} to allow it to compile. However, if the index is more dynamic e.g.\ from user input, the compiler can't catch it.
   \lstinputlisting{array3.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Slices}
-  A \inlinecode{slice} type is a dynamically-sized view into a contiguous sequence of any type. It is usally seen as a reference.
+  A \inlinecode{slice} type is a dynamically-sized view into a contiguous sequence of any type. It is usually seen as a reference.
   \lstinputlisting{slice1.rs}
 \end{frame}
 
@@ -173,9 +174,9 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{Tuples and Tuple Destruction}
-  Tuples are a way to group different data together. Unlike Arrays each tuple elements can be different types (hetrogeneous). A tuple can be declared by writing a comma seperated list of types inside a parenthesis.
+  Tuples are a way to group different data together. Unlike Arrays each tuple elements can be different types (heterogeneous). A tuple can be declared by writing a comma separated list of types inside a parenthesis.
   \lstinputlisting{tuples1.rs}
-  Tuples can be destructed into to get it's individual values.
+  Tuples can be destructed into to get its individual values.
   \lstinputlisting{tuples2.rs}
 \end{frame}
 
@@ -191,12 +192,12 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
   \frametitle{Declaring Functions}
   A function can be declared using the \inlinecode{fn} key word, then the name followed by a parenthesis and curly brackets. Any code to be executed in the function is placed in the curly brackets. By convention, function names are in \emph{snake\_case}.
   \lstinputlisting{functions1.rs}
-  Rust functions can be declared any where in the source file and can be called just like any other programming languages.
+  Rust functions can be declared anywhere in the source file and can be called just like any other programming languages.
 \end{frame}
 
 \begin{frame}
   \frametitle{Function Parameters}
-  Function arguments (parameters) are declared inbetween the parenthesis in the function declaration. Parameters are declared in the form \inlinecode{$variable\_name: type$}. Multiple parameters are seperated by commas.
+  Function arguments (parameters) are declared in between the parenthesis in the function declaration. Parameters are declared in the form \inlinecode{$variable\_name: type$}. Multiple parameters are separated by commas.
   \lstinputlisting{functions2.rs}
 \end{frame}
 
@@ -206,7 +207,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
     \item{Statements: Lines of codes to perform some actions}
     \item{Expressions: Lines of codes to evaluate and return a value}
   \end{itemize}
-  Exressions ends without a semicolon (;), any expression that ends with a semicolon would be statement. An example of a statement would be assigning a variable.
+  Expressions ends without a semicolon (;), any expression that ends with a semicolon would be statement. An example of a statement would be assigning a variable.
   \lstinputlisting{functions3.rs}
 \end{frame}
 
@@ -220,7 +221,7 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \subsection{If Else}
 \begin{frame}
   \frametitle{Using Ifs}
-  To run code based on different conditions, \inlinecode{if} expressions can be used. If the condition is true, the code inside of the block would be ran.
+  To run code based on different conditions, \inlinecode{if} expressions can be used. If the condition is true, the code inside the block would be run.
   \lstinputlisting{if_else1.rs}
 \end{frame}
 
@@ -232,14 +233,14 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{If Else with let}
-  \inlinecode{if}, \inlinecode{else if} and \inlinecode{else} are considered expressions. Therefore they can be used just like any other expressions.
+  \inlinecode{if}, \inlinecode{else if} and \inlinecode{else} are considered expressions. Therefore, they can be used just like any other expressions.
   \lstinputlisting{if_else3.rs}
 \end{frame}
 
 \subsection{Loops}
 \begin{frame}
   \frametitle{\inlinecode{loop} Keyword}
-  The \inlinecode{loop} keyword runs the code inside of the block indefinetly until the program crashes/stopped or a break keyword is used.
+  The \inlinecode{loop} keyword runs the code inside the block indefinitely until the program crashes/stopped or a break keyword is used.
   \lstinputlisting{loops1.rs}
 \end{frame}
 
@@ -251,13 +252,13 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}
   \frametitle{Returning Values from Loops}
-  All loops in Rust are also considered expressions, thefore can be used to return value from it. However, instead of using the \inlinecode{return} keyword, the return value is set using the \inlinecode{break} keyword.
+  All loops in Rust are also considered expressions, therefore can be used to return value from it. However, instead of using the \inlinecode{return} keyword, the return value is set using the \inlinecode{break} keyword.
   \lstinputlisting{loops3.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{While Loops}
-  \inlinecode{while} loops in Rust is simillar to \inlinecode{while} loops in other programming languages. The code inside of the block will execute until the condition is no longer met.
+  \inlinecode{while} loops in Rust is similar to \inlinecode{while} loops in other programming languages. The code inside the block will execute until the condition is no longer met.
   \lstinputlisting{while.rs}
 \end{frame}
 
@@ -276,12 +277,12 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 \subsection{Pattern Matching}
 \begin{frame}
   \frametitle{Pattern Matching with \inlinecode{match}}
-  The \inlinecode{match} keyword allows a Rust program to match a given values according to different patterns. It is usually used with \inlinecode{Enum} and \inlinecode{Option<T>}/\inlinecode{Result<T, E>}.
+  The \inlinecode{match} keyword allows a Rust program to match a given value according to different patterns. It is usually used with \inlinecode{Enum} and \inlinecode{Option<T>}/\inlinecode{Result<T, E>}.
   \lstinputlisting{patterns1.rs}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Exhausiveness of \inlinecode{match} construct}
+  \frametitle{Exhaustiveness of \inlinecode{match} construct}
   All values the variable type can be must be covered under the match construct. This is enforced by the Rust compiler as unhandled values of the variables might cause unexpected bugs within the program.
   \lstinputlisting{patterns2.rs}
   This example is the same as previous but without one of the ``arm''/didn't consider the \inlinecode{None} case. However, this code won't compile and the Rust compiler will give an error.
@@ -289,12 +290,12 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
 
 \begin{frame}[allowframebreaks]
   \frametitle{Catch All Patterns}
-  Often times when using a \inlinecode{match}, a programmer only cares about a few possiblity of the values and would like to ignore/have the code handle the others the same way.
+  Often times when using a \inlinecode{match}, a programmer only cares about a few possibilities of the values and would like to ignore/have the code handle the others the same way.
   \lstinputlisting{patterns3.rs}
 
   \newpage
 
-  Alternativly, an arm with an ``\_'' could be use if the value is not being used.
+  Alternatively, an arm with an ``\_'' could be use if the value is not being used.
   \lstinputlisting{patterns4.rs}
 
   There are other types of patterns that can be used as \inlinecode{match} arms. See Pattern Syntax in~\hyperlink{Additional Resources}{Additional Resources}.
@@ -306,25 +307,25 @@ let $\textit{variable\_{}name}$: $\textit{type}$ = $\textit{value}$;
   Writing comments helps make code more readable. Rust uses \inlinecode{//} as comments. Anything in the same line after it would be considered a comment.
   \lstinputlisting{comments1.rs}
 
-  Eventhough according to convention, single line comments are prefered, Rust still support multiple/block comments.
+  Even though according to convention, single line comments are preferred, Rust still support multiple/block comments.
   \lstinputlisting{comments2.rs}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{Documentation Comments}
-  There are special types of comments in Rust used for generating html documentation. It uses \inlinecode{///} instead of \inlinecode{//}.
+  There are special types of comments in Rust used for generating HTML documentation. It uses \inlinecode{///} instead of \inlinecode{//}.
 
-  A special kinda of docments uses \inlinecode{//!}. This is used to document an item that contains the comment instead. This is usually used for documenting crates or modules (more on crates and modules later).
+  A special kinda of comments uses \inlinecode{//!}. This is used to document an item that contains the comment instead. This is usually used for documenting crates or modules (more on crates and modules later).
   \lstinputlisting{documentation.rs}
 
-  To generate the html documentation, run \inlinecode{cargo doc}. The documentation should generate at \inlinecode{$cargo\_project\_directory$/target/doc}.
+  To generate the HTML documentation, run \inlinecode{cargo doc}. The documentation should generate at \inlinecode{$cargo\_project\_directory$/target/doc}.
 
   \alert{Note:} You can use \inlinecode{cargo doc --open} opens the documentation in your favorite web browser when after the documentation generated.
 
   \alert{Note:} Rust documentation also supports Markdown. Hence, you can create title and source code blocks as examples in the documentation as well.
 \end{frame}
 
-% All of the following is optional and typically not needed.
+% All the following is optional and typically not needed.
 \appendix
 \section<presentation>*{\appendixname}
 \subsection<presentation>*{Additional Resources}
