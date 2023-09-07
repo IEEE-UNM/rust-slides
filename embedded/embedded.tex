@@ -17,7 +17,7 @@
   Often times to use the HAL some configuration and setup are needed to program the MCU. Some common setups includes:
 
   \begin{itemize}
-    \item{Installing rustup target e.g. \inlinecode{thumbv7em-none-eabihf} for STM32 F4 boards}
+    \item{Installing rustup target e.g. \inlinecode{thumbv7em-none-eabihf} for STM32 L4 boards}
     \item{Installing required software/compiler}
     \item{Change cargo runner (how cargo runs the compiled binary)}
   \end{itemize}
@@ -27,14 +27,15 @@
 
 \begin{frame}
   \frametitle{Project Folder Download}
-  \begin{center}
+  \begin{figure}
     \includegraphics[width=.47\textwidth]{qrcode.png}
-  \end{center}
+    \caption{Link: \url{https://youtube.com}}
+  \end{figure}
 \end{frame}
 
 \begin{frame}
   \frametitle{Blinky}
-  The \inlinecode{stm32f4xx-hal} library/crate is the go to HAL crate for STM32 F4 series MCU.
+  The \inlinecode{stm32l4xx-hal} library/crate is the go to HAL crate for STM32 L4 series MCU.
 
   Setup Steps:
 
@@ -57,80 +58,83 @@
   \frametitle{Program Main Function and Setup}
   An entry point needed to be defined to tell what the MCU what to execute when it resets.
 
-  \lstinputlisting[linerange={10-11,30}]{src/bin/blinky.rs}
+  \lstinputlisting[linerange={9-10,32}]{scrolling-game/bin/blinky.rs}
 
   Before we can setup any peripherals, we need to take the ownership of the peripherals.
 
-  \lstinputlisting[linerange={12}]{src/bin/blinky.rs}
+  \lstinputlisting[linerange={12}]{scrolling-game/bin/blinky.rs}
 
   Once the peripherals is setup a \inlinecode{loop} is used to execute code infinitely.
 \end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{Digital Pins}
-  A digital output pin can be used to output high and low on a GPIO pin. A digital pin must be setup as an output before it can be used. In \inlinecode{stm32f4xx-hal} a digital output can be setup by doing:
-  \lstinputlisting[linerange={14-15}]{src/bin/blinky.rs}
+  A digital output pin can be used to output high and low on a GPIO pin. A digital pin must be setup as an output before it can be used. In \inlinecode{stm32l4xx-hal} a digital output can be setup by doing:
+  \lstinputlisting[linerange={18-21}]{scrolling-game/bin/blinky.rs}
 
   Eventhough the setup procdure might differ, most crates should have simillar/same functions to manipulate it.
-  \lstinputlisting[linerange={22}, caption={Set Digital Output to High}]{src/bin/blinky.rs}
-  \lstinputlisting[linerange={24}, caption={Set Digital Output to High}]{src/bin/blinky.rs}
+  \lstinputlisting[linerange={27}, caption={Set Digital Output to High}]{scrolling-game/bin/blinky.rs}
+  \lstinputlisting[linerange={29}, caption={Set Digital Output to Low}]{scrolling-game/bin/blinky.rs}
 
   A digital input is used to read digital signal. Setting up pins as a digital input is simillar to digital output:
-  \lstinputlisting[linerange={15-16}]{src/bin/digital-input.rs}
+  \lstinputlisting[linerange={18-21}]{scrolling-game/bin/digital-input.rs}
+
+  \pagebreak
 
   Two main methods can be used to read the digital input:
-  \lstinputlisting[linerange={22}, caption={Returns True if input is high}]{src/bin/digital-input.rs}
-  \lstinputlisting[linerange={23}, caption={Returns True if input is low}]{src/bin/digital-input.rs}
+  \lstinputlisting[linerange={27}, caption={Returns True if input is high}]{scrolling-game/bin/digital-input.rs}
+  \lstinputlisting[linerange={28}, caption={Returns True if input is low}]{scrolling-game/bin/digital-input.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Delay}
   A delay can be used to block program execution for a specific amount of time. To setup a delay:
-  \lstinputlisting[linerange={17-19}]{src/bin/blinky.rs}
+  \lstinputlisting[linerange={23-24}]{scrolling-game/bin/blinky.rs}
 
   There are two different precision delays:
-  \lstinputlisting[linerange={23}, caption={Delay With Millisecond Precision}]{src/bin/blinky.rs}
-  \lstinputlisting[linerange={25}, caption={Delay With Microsecond Precision}]{src/bin/blinky.rs}
+  \lstinputlisting[linerange={28}, caption={Delay With Millisecond Precision}]{scrolling-game/bin/blinky.rs}
+  \lstinputlisting[linerange={30}, caption={Delay With Microsecond Precision}]{scrolling-game/bin/blinky.rs}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{Analog Input}
   An ADC can be used to read analog input. An ADC can be setup by doing:
-  \lstinputlisting[linerange={25-29}]{src/bin/adc.rs}
+  \lstinputlisting[linerange={25-28}]{scrolling-game/bin/adc.rs}
 
   Both ADC temperature and GPIO pins can be used to read analog data.
 
   A single sample temperature measurements can be done by doing:
-  \lstinputlisting[linerange={36}]{src/bin/adc.rs}
+  \lstinputlisting[linerange={29,35}]{scrolling-game/bin/adc.rs}
 
   \pagebreak
 
   Before a voltage value can be read the GPIO pin must be setup to used as analog input.
-  \lstinputlisting[linerange={21-22}]{src/bin/adc.rs}
+  \lstinputlisting[linerange={19,20}]{scrolling-game/bin/adc.rs}
 
-  A single sample can be taken by using convert method:
-  \lstinputlisting[linerange={33}]{src/bin/adc.rs}
+  A single sample can be taken by using read method:
+  \lstinputlisting[linerange={32}]{scrolling-game/bin/adc.rs}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[allowframebreaks]
   \frametitle{USART/UART/Serial Port}
   A serial monitor can be used to transfer data between the host computer and MCU. The UART/USART protocol is usually used for this purpose. To setup a USART for serial communication:
-  \lstinputlisting[linerange={17-20}]{src/bin/usart.rs}
+  \lstinputlisting[linerange={18-24},caption={Setting up required peripherals.}]{scrolling-game/bin/usart.rs}
+  \lstinputlisting[linerange={25-31},caption={Creating Serial Port.}]{scrolling-game/bin/usart.rs}
 
   A single ``word''/character can be read using the \inlinecode{read} method.
-  \lstinputlisting[linerange={23}]{src/bin/usart.rs}
+  \lstinputlisting[linerange={34}]{scrolling-game/bin/usart.rs}
 
   To send data, the \inlinecode{write} method is used instead.
-  \lstinputlisting[linerange={27}]{src/bin/usart.rs}
+  \lstinputlisting[linerange={40}]{scrolling-game/bin/usart.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Random Number Generator (RNG)}
-  The rand crate/library can be used to generate random numbers. The ADC temperature noise can be used a good enough random seed to for fill simple RNG purposes.
-  \lstinputlisting[linerange={31,32}]{src/bin/rng.rs}
+  The rand crate/library can be used to generate random numbers. The ADC temperature noise can be used a good enough random seed to forfill simple RNG purposes.
+  \lstinputlisting[linerange={29-30}]{scrolling-game/bin/rng.rs}
 
   To generate a random number, the gen method can be used with a type anotated variable:
-  \lstinputlisting[linerange={35}]{src/bin/rng.rs}
+  \lstinputlisting[linerange={33}]{scrolling-game/bin/rng.rs}
 \end{frame}
 
 \section{Packages and Crates}
@@ -149,11 +153,11 @@
   \frametitle{Binary and Library Crates}
   {\fontsize{15pt}{18pt}\selectfont Library Crates}
 
-  A library crate is declared in \inlinecode{src/lib.rs} file. It can be used by other binary crates in the same package.
+  A library crate is declared in \inlinecode{scrolling-game/lib.rs} file. It can be used by other binary crates in the same package.
 
   {\fontsize{15pt}{18pt}\selectfont Binary Crates}
 
-  A binary crate is declared in \inlinecode{src/main.rs}. This is the main binary crate and will be compiled to a binary with the same name as the package. Other additional binaries can be added in \inlinecode{src/bin/}. The compiled binary would be the same name as the file but with an exectuable extention instead of \inlinecode{.rs}.
+  A binary crate is declared in \inlinecode{scrolling-game/main.rs}. This is the main binary crate and will be compiled to a binary with the same name as the package. Other additional binaries can be added in \inlinecode{scrolling-game/bin/}. The compiled binary would be the same name as the file but with an exectuable extention instead of \inlinecode{.rs}.
 \end{frame}
 
 \begin{frame}
@@ -179,7 +183,7 @@
   \frametitle{Privacy and Visibility}
   By default code inside of modules and submodules are invisible to the module/crate (parents) that declared it. Any code can be made visible/public to the parent by adding the \inlinecode{pub} keyword in the declaration of the code.
 
-  \lstinputlisting[linerange={15,16},caption={Making modules public}]{src/lib.rs}
+  \lstinputlisting[linerange={15,16},caption={Making modules public}]{scrolling-game/lib.rs}
 
   \alert{Note}: Making \inlinecode{struct}s public only makes the \inlinecode{struct} public but not the fields. The fields must be made public individually.
 
@@ -200,15 +204,15 @@
 
 \begin{frame}
   \frametitle{Absolute Paths}
-  \lstinputlisting[linerange={74,75}, caption={Absolute paths from external crates.}]{src/main.rs}
-  \lstinputlisting[linerange={98,99}, caption={Absolute paths from the same crates.}]{src/lib.rs}
+  \lstinputlisting[linerange={93,94}, caption={Absolute paths from external crates.}]{scrolling-game/main.rs}
+  \lstinputlisting[linerange={96,97}, caption={Absolute paths from the same crates.}]{scrolling-game/lib.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Relative Paths}
-  \lstinputlisting[linerange={109,110}, caption={Relative paths using \inlinecode{super}.}]{src/lib.rs}
-  \lstinputlisting[linerange={111,112}, caption={Relative paths from the module.}]{src/lib.rs}
-  \lstinputlisting[linerange={124,125}, caption={Relative paths using \inlinecode{self}.}]{src/lib.rs}
+  \lstinputlisting[linerange={110,111}, caption={Relative paths using \inlinecode{super}.}]{scrolling-game/lib.rs}
+  \lstinputlisting[linerange={112,113}, caption={Relative paths from the module.}]{scrolling-game/lib.rs}
+  \lstinputlisting[linerange={127,128}, caption={Relative paths using \inlinecode{self}.}]{scrolling-game/lib.rs}
 \end{frame}
 
 \begin{frame}
@@ -216,7 +220,10 @@
   As the crates gets more and more complex with many modules and submodules, it might be inconvinient or tedious to call a function using relative or absolute paths. A path can be brought into a scope and acts as a shortcut to the path.
 
   This can be done by using the \inlinecode{use} keyword followed by the path to the identifier. Once a path is brought into scope, it can be used like it is defined in the same module scope.
-  \lstinputlisting[linerange={16,19-20,71,88-89}, caption={Brining \inlinecode{ScollingGame} into scope.}]{src/main.rs}
+  \lstinputlisting[linerange={15}, caption={Brining \inlinecode{pac} into scope.}]{scrolling-game/main.rs}
+
+  Edited code:
+  \lstinputlisting[linerange={31}]{scrolling-game/main.rs}
 \end{frame}
 
 \subsection{Installing External Libraries}
@@ -317,11 +324,8 @@ panic = "abort"
 match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
     Ok(mut lcd) => lcd.write_str("Hello World!", &mut delay).unwrap(),
     Err(_) => {
-        let mut led = pins.d13.into_output();
-        loop {
-            led.toggle();
-            delay.delay_us(1000_u32);
-        }
+        defmt::println!(''Unable to setup LCD'');
+        loop {}
     }
 }
 \end{lstlisting}
@@ -332,11 +336,8 @@ match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
 
 \begin{lstlisting}
     let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).unwrap_or_else(|_| {
-        let mut led = pins.d13.into_output();
-        loop {
-            led.toggle();
-            delay.delay_us(100000_u32);
-        }
+        defmt::println!(''Unable to setup LCD'');
+        loop {}
     });
 
     // Display the following string
@@ -422,7 +423,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \begin{frame}
   \frametitle{Structs}
   Structs are used to group multiple related values together using names. A struct is used to implement object oriented programming (OOP) design pattern in Rust. We can use structs to hold our game.
-  \lstinputlisting[linerange={32 -43}]{src/game.rs}
+  \lstinputlisting[linerange={32 -43}]{scrolling-game/game.rs}
 \end{frame}
 
 \subsection{Associated Functions}
@@ -440,37 +441,37 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \begin{frame}
   \frametitle{Instance Methods}
   Defining an instance method for a struct is simillar to defining a function. Unlike normal functions, methods have \inlinecode{\&self} or \inlinecode{self: \&Self} as the first parameter. The \inlinecode{Self} type can be used as an alias to the structs we are implementing the associated function.
-  \lstinputlisting[linerange={45,303-306,312}]{src/game.rs}
+  \lstinputlisting[linerange={45,311-314,315}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Mutable Instance Methods}
   A mutable instance method is simillar to normal instance except the struct must be declared as mutable for it to be used. Instead of using \inlinecode{\&self} it takes \inlinecode{\&mut self} as the first parameter.
-  \lstinputlisting[linerange={45,268-270,284,312}]{src/game.rs}
+  \lstinputlisting[linerange={45,268-270,284,315}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Non-method Functions}
   Functions inside an \inlinecode{impl} block doesn't need to have \inlinecode{\&self} as their first parameter. These are usually used as constructor called \inlinecode{new}. However it isn't limited to only creating constructors. Non-method
-  \lstinputlisting[linerange={45,86-94,312}]{src/game.rs}
+  \lstinputlisting[linerange={45,86-94,315}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{Calling Associative Functions}
   Calling methods are simillar to other OOP languages. First, create an instance of the struct and add \inlinecode{.} followed by the method being called.
-  \lstinputlisting[linerange={41-45}]{src/lib.rs}
+  \lstinputlisting[linerange={41-45}]{scrolling-game/lib.rs}
 
   \pagebreak
 
   Calling non-methods are slightly different than calling methods. To call an non-method function the \inlinecode{::} syntax is used instead.
-  \lstinputlisting[linerange={71}]{src/main.rs}
+  \lstinputlisting[linerange={90}]{scrolling-game/main.rs}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Enum Methods}
   Enums can have methods just like structs. This can be used to create instances or methods of each instance.
 
-  \lstinputlisting[linerange={16,33,34,51-}]{src/direction.rs}
+  \lstinputlisting[linerange={16,33,34,51-}]{scrolling-game/direction.rs}
 \end{frame}
 
 \section{RAII and Borrow Checker}
@@ -497,18 +498,18 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
   \frametitle{Moving}
   The ownership of a value can be ``moved''. The ``owners'' of the values can be moved in serveral ways. One of the most common way is assigning the value to a new variable.
 
-  \lstinputlisting[linerange=43-47]{src/main.rs}
+  \lstinputlisting[linerange=39-44]{scrolling-game/bin/ownership.rs}
 
   \alert{Note} that after the ownership have been moved, the previous owner can no longer used the moved value (values can only have one owner).
 
   \pagebreak
 
   Ownership transfers works simillar with functions and methods as well. It can be moved into and out of a function.
-  \lstinputlisting[linerange=88-94, caption={Function that takes ownership.}]{src/lib.rs}
-  \lstinputlisting[linerange=48-50, caption={Functions taking ownership usage.}]{src/main.rs}
+  \lstinputlisting[linerange=14-17, caption={Function that takes ownership.}]{scrolling-game/bin/ownership.rs}
+  \lstinputlisting[linerange=50-52, caption={Functions taking ownership usage.}]{scrolling-game/bin/ownership.rs}
 
   \pagebreak
-  \lstinputlisting[linerange=85-94, caption={Associated function gives ownership.}]{src/game.rs}
+  \lstinputlisting[linerange=85-94, caption={Associated function gives ownership.}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -524,14 +525,21 @@ println!("x: {}, y: {}", x, y);
   This is due to the fact that stack only data can be copied as they are only stored on the stack. While deep copies might take a longer period of time to create.
 \end{frame}
 
-\begin{frame}[allowframebreaks]
+\begin{frame}[fragile]
   \frametitle{Borrowing}
   If the programmer wanted to used a value in a function but still continue using the value outside. The value must be moved into and out of the function. Instead of moving the value, a reference of the value can be used instead. This is called reference ``borrowing''. It can be done by adding \inlinecode{\&} before the value and type.
-  \lstinputlisting[linerange=129-132, caption={Methods taking reference to the object.}]{src/lib.rs}
+\begin{lstlisting}
+fn borrow(game: &ScrollingGame) {
+    // Function Code
+}
+\end{lstlisting}
 
-  \pagebreak
   A mutable borrow is also allowed. Instead of \inlinecode{\&} \inlinecode{\&mut} is used instead.
-  \lstinputlisting[linerange=77-86]{src/lib.rs}
+\begin{lstlisting}
+fn borrow_mutable(game: &mut ScrollingGame) {
+    // Function Code
+}
+\end{lstlisting}
 \end{frame}
 
 % \section{Traits}

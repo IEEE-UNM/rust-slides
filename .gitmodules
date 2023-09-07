@@ -1,0 +1,3 @@
+[submodule "scrolling-game"]
+	path = scrolling-game
+	url = https://github.com/IEEE-UNM/scrolling-game.git
