@@ -6,7 +6,8 @@
 
 # Don't add the slash
 OUTPUTDIR = slides
-PDFLATEX = pdflatex -output-directory=../$(OUTPUTDIR)
+ENGINE = pdflatex
+PDFLATEX = $(ENGINE) -output-directory=../$(OUTPUTDIR)
 CLEANARTIFACTS = find $(OUTPUTDIR) -not -iname "*.pdf" -not -name "$(OUTPUTDIR)"|xargs rm
 
 .PHONY: all
