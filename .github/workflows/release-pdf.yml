@@ -7,19 +7,29 @@ on:
    
 jobs:
   build:
-
+    strategy:
+      matrix:
+        document: [setup, basics, embedded]
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+
+    - shell: sh
+      run: cd ${{ matrix.document }}
     
     - name: Creating PDF
       uses: xu-cheng/latex-action@v2
       with:
         root_file: |
-            setup/setup.tex
-            basics/basics.tex
-            # embedded/embedded.tex
+            ${{ matrix.document }}.tex
       
     - name: Uploading PDF to release
       run: ls
+
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.document }}
+        path: ${{ matrix.document }}.pdf
+
