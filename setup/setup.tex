@@ -39,7 +39,7 @@
   \frametitle{Installing rustup for Windows}
   \begin{enumerate}
           \setcounter{enumi}{3}
-    \item<+->{Adding Rust to \lstinline[backgroundcolor=backcolour]{PATH} Enviornment Variable (might not be needed)
+    \item<+->{Adding Rust to \lstinline[backgroundcolor=backcolour]{PATH} Environment Variable (might not be needed)
 
           All rust tools are installed in \inlinecode{C:/Users/\emph{username}/.cargo/bin}
           }
@@ -47,7 +47,7 @@
               \begin{column}{.5\linewidth}
                 \begin{enumerate}
                         \setcounter{enumii}{4}
-                  \item<+->{Go to System Properties and click Enviornment Variables}
+                  \item<+->{Go to System Properties and click Environment Variables}
                         \includegraphics[height=5cm]{system_property.png}
                 \end{enumerate}
               \end{column}
@@ -96,7 +96,7 @@
 \begin{frame}[fragile]
   \frametitle{Testing Installation}
 
-  To check whether Rust is installed correctly run in any CLI e.g. PowerShell and CMD on windows or terminal on Unix:
+  To check whether Rust is installed correctly run in any CLI e.g. PowerShell and CMD on Windows or terminal on Unix:
 \begin{semiverbatim}
 \$ rustc ---version
 \end{semiverbatim}
@@ -106,7 +106,7 @@
 rustc x.y.z (abcabcabc yyyy-mm-dd)
 \end{semiverbatim}
 
-  If it didn't work double check if the \inlinecode{PATH} variable is setup correctly.
+  If it didn't work double check if the \inlinecode{PATH} variable is set up correctly.
 \end{frame}
 
 \subsection{Setting Up IDE/rust-analyzer}
@@ -135,7 +135,7 @@ rustc x.y.z (abcabcabc yyyy-mm-dd)
 
 \subsection{Using rustc}
 \begin{frame}[fragile]{Compiling Using rustc}
-  The \inlinecode{rustc} binary is the compiler of Rust. To compile the a Rust code simply run:
+  The \inlinecode{rustc} binary is the compiler of Rust. To compile the Rust code simply run:
 
 \begin{lstlisting}
 $ rustc hello_world.rs
@@ -161,21 +161,21 @@ $ cd hello_world
 $ cargo build
 \end{lstlisting}
 
-  The binary should be created in the path \inlinecode{target/debug/\emph{packagename}}. You can just run the built binary file or you can run it using cargo.
+  The binary should be created in the path \inlinecode{target/debug/\emph{packagename}}. You can just run the built binary file, or you can run it using cargo.
 
 \begin{lstlisting}
 $ cargo run
 \end{lstlisting}
 
-  \inlinecode{cargo run} will build the binary if any changes is made to the source code and run the resultant binary.
+  \inlinecode{cargo run} will build the binary if any changes are made to the source code and run the resultant binary.
 \end{frame}
 
 \section{IDE Integration}
 \begin{frame}[fragile]
   \frametitle{IDE}
-  An Integrated Development Enviornment (IDE). In layman's term a fancy text editor that helps you code.
+  An Integrated Development Environment (IDE). In layman's term a fancy text editor that helps you code.
 
-  \inlinecode{rust-analyzer} is a tool made by the Rust community to help with IDE integration. It speaks Language Server Protocol (LSP) that helps IDE and programming languages to communiticate with each other.
+  \inlinecode{rust-analyzer} is a tool made by the Rust community to help with IDE integration. It speaks Language Server Protocol (LSP) that helps IDE and programming languages to communicate with each other.
 
   Website Homepage: \url{https://rust-analyzer.github.io/}
 
@@ -233,7 +233,7 @@ More commands are documented in rustic \href{https://github.com/brotzeit/rustic}
   \begin{enumerate}
     \item<+->{Go to the extensions tab (Ctrl + Shift + X)}
     \item<+->{Search for rust-analyzer}
-    \item<+->{Hit install on the rust-analyzer extension}
+    \item<+->{Install the rust-analyzer extension}
   \end{enumerate}
 
   For more information on how to install extenstions in VS Code, visit the VS Code \href{https://code.visualstudio.com/docs/editor/extension-marketplace}{documentation}.

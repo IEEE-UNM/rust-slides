@@ -12,9 +12,9 @@
 \section{Blinky}
 \begin{frame}
   \frametitle{Project Setup}
-  Before a MCU can be programmed, an appropriate Hardware Abstraction Layer (HAL) library/crate for the MCU needed to be used.
+  Before an MCU can be programmed, an appropriate Hardware Abstraction Layer (HAL) library/crate for the MCU needed to be used.
 
-  Often times to use the HAL some configuration and setup are needed to program the MCU. Some common setups includes:
+  Often times to use the HAL some configuration and setup are needed to program the MCU. Some common setups include:
 
   \begin{itemize}
     \item{Installing rustup target e.g. \inlinecode{thumbv7em-none-eabihf} for STM32 L4 boards}
@@ -22,7 +22,7 @@
     \item{Change cargo runner (how cargo runs the compiled binary)}
   \end{itemize}
 
-  \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust} provides a useful list of avaiable libraries/crates for embedded programming in Rust.
+  \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust} provides a useful list of available libraries/crates for embedded programming in Rust.
 \end{frame}
 
 \begin{frame}
@@ -35,7 +35,7 @@
 
 \begin{frame}
   \frametitle{Blinky}
-  The \inlinecode{stm32l4xx-hal} library/crate is the go to HAL crate for STM32 L4 series MCU.
+  The \inlinecode{stm32l4xx-hal} library/crate is the go-to HAL crate for STM32 L4 series MCU.
 
   Setup Steps:
 
@@ -60,11 +60,11 @@
 
   \lstinputlisting[linerange={9-10,32}]{scrolling-game/bin/blinky.rs}
 
-  Before we can setup any peripherals, we need to take the ownership of the peripherals.
+  Before we can set up any peripherals, we need to take the ownership of the peripherals.
 
   \lstinputlisting[linerange={12}]{scrolling-game/bin/blinky.rs}
 
-  Once the peripherals is setup a \inlinecode{loop} is used to execute code infinitely.
+  Once the peripherals is set up a \inlinecode{loop} is used to execute code infinitely.
 \end{frame}
 
 \begin{frame}[allowframebreaks]
@@ -72,11 +72,11 @@
   A digital output pin can be used to output high and low on a GPIO pin. A digital pin must be setup as an output before it can be used. In \inlinecode{stm32l4xx-hal} a digital output can be setup by doing:
   \lstinputlisting[linerange={18-21}]{scrolling-game/bin/blinky.rs}
 
-  Eventhough the setup procdure might differ, most crates should have simillar/same functions to manipulate it.
+  Even though the setup procedure might differ, most crates should have similar/same functions to manipulate it.
   \lstinputlisting[linerange={27}, caption={Set Digital Output to High}]{scrolling-game/bin/blinky.rs}
   \lstinputlisting[linerange={29}, caption={Set Digital Output to Low}]{scrolling-game/bin/blinky.rs}
 
-  A digital input is used to read digital signal. Setting up pins as a digital input is simillar to digital output:
+  A digital input is used to read digital signal. Setting up pins as a digital input is similar to digital output:
   \lstinputlisting[linerange={18-21}]{scrolling-game/bin/digital-input.rs}
 
   \pagebreak
@@ -88,7 +88,7 @@
 
 \begin{frame}
   \frametitle{Delay}
-  A delay can be used to block program execution for a specific amount of time. To setup a delay:
+  A delay can be used to block program execution for a specific amount of time. To set up a delay:
   \lstinputlisting[linerange={23-24}]{scrolling-game/bin/blinky.rs}
 
   There are two different precision delays:
@@ -117,7 +117,7 @@
 
 \begin{frame}[allowframebreaks]
   \frametitle{USART/UART/Serial Port}
-  A serial monitor can be used to transfer data between the host computer and MCU. The UART/USART protocol is usually used for this purpose. To setup a USART for serial communication:
+  A serial monitor can be used to transfer data between the host computer and MCU. The UART/USART protocol is usually used for this purpose. To set up a USART for serial communication:
   \lstinputlisting[linerange={18-24},caption={Setting up required peripherals.}]{scrolling-game/bin/usart.rs}
   \lstinputlisting[linerange={25-31},caption={Creating Serial Port.}]{scrolling-game/bin/usart.rs}
 
@@ -130,16 +130,16 @@
 
 \begin{frame}
   \frametitle{Random Number Generator (RNG)}
-  The rand crate/library can be used to generate random numbers. The ADC temperature noise can be used a good enough random seed to forfill simple RNG purposes.
+  The rand crate/library can be used to generate random numbers. The ADC temperature noise can be used a good enough random seed to for fill simple RNG purposes.
   \lstinputlisting[linerange={29-30}]{scrolling-game/bin/rng.rs}
 
-  To generate a random number, the gen method can be used with a type anotated variable:
+  To generate a random number, the gen method can be used with a type annotated variable:
   \lstinputlisting[linerange={33}]{scrolling-game/bin/rng.rs}
 \end{frame}
 
 \section{Packages and Crates}
 \subsection{The Module System}
-\begin{frame} \frametitle{Crates, Modules and Packages} Rust have features that helps organize code.
+\begin{frame} \frametitle{Crates, Modules and Packages} Rust have features that help organize code.
 
   \begin{itemize}
     \item{Packages: A cargo feature that lets you build, test and share crates. A new package is created when \inlinecode{cargo new} is used. It contains a \emph{Cargo.toml} file.}
@@ -157,7 +157,7 @@
 
   {\fontsize{15pt}{18pt}\selectfont Binary Crates}
 
-  A binary crate is declared in \inlinecode{scrolling-game/main.rs}. This is the main binary crate and will be compiled to a binary with the same name as the package. Other additional binaries can be added in \inlinecode{scrolling-game/bin/}. The compiled binary would be the same name as the file but with an exectuable extention instead of \inlinecode{.rs}.
+  A binary crate is declared in \inlinecode{scrolling-game/main.rs}. This is the main binary crate and will be compiled to a binary with the same name as the package. Other additional binaries can be added in \inlinecode{scrolling-game/bin/}. The compiled binary would be the same name as the file but with an executable extension instead of \inlinecode{.rs}.
 \end{frame}
 
 \begin{frame}
@@ -171,7 +171,7 @@
     \item In the file \inlinecode{src/\emph{module\_name}/mod.rs} (legacy)
   \end{itemize}
 
-  Submodules can also be defined in modules. They are defined simillar to how you define modules:
+  Submodules can also be defined in modules. They are defined similar to how you define modules:
   \begin{itemize}
     \item Inline inside curly brackets right after declaration.
     \item In the file \inlinecode{src/\emph{module\_name}/\emph{submodule\_name}.rs}
@@ -192,7 +192,7 @@
 
 \begin{frame}
   \frametitle{Paths}
-  Every piece of code/item e.g. functions, variables and stucts written in a module or crate have their own unique ``path ''to access them.
+  Every piece of code/item e.g. functions, variables and structs written in a module or crate have their own unique ``path ''to access them.
   A path is made out of one or more identifiers followed by \inlinecode{::}.
 
   There are two types of paths:
@@ -217,7 +217,7 @@
 
 \begin{frame}
   \frametitle{The \inlinecode{use} Keyword}
-  As the crates gets more and more complex with many modules and submodules, it might be inconvinient or tedious to call a function using relative or absolute paths. A path can be brought into a scope and acts as a shortcut to the path.
+  As the crates gets more and more complex with many modules and submodules, it might be inconvenient or tedious to call a function using relative or absolute paths. A path can be brought into a scope and acts as a shortcut to the path.
 
   This can be done by using the \inlinecode{use} keyword followed by the path to the identifier. Once a path is brought into scope, it can be used like it is defined in the same module scope.
   \lstinputlisting[linerange={15}, caption={Brining \inlinecode{pac} into scope.}]{scrolling-game/main.rs}
@@ -231,7 +231,7 @@
   \frametitle{Installing Crate from crates.io}
   External packages can be installed to the current package. There are a few ways to do this, adding it in Cargo.toml or use \inlinecode{cargo add $package\_name$}.
 
-  There are various crates that are avaiable to \href{crates.io}{crates.io}. A list of amazing packages used for embedded Rust can also be found at \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust}
+  There are various crates that are available to \href{crates.io}{crates.io}. A list of amazing packages used for embedded Rust can also be found at \href{https://github.com/rust-embedded/awesome-embedded-rust}{Awesome Embedded Rust}
 
 \begin{lstlisting}[caption={Adding Dependencies in Cargo.toml}]
 [dependencies]
@@ -243,7 +243,7 @@ hd44780-driver = "0.4.0"
 
 \begin{frame}[fragile, allowframebreaks]
   \frametitle{LCD Library}
-  Luckily there is a crate for interfacing with the LCD in crates.io and it is called hd44780-driver. To install it type in \inlinecode{cargo add hd44780-driver}.
+  Luckily there is a crate for interfacing with the LCD in crates.io, and it is called hd44780-driver. To install it type in \inlinecode{cargo add hd44780-driver}.
 
   To bring it into path do:
 \begin{lstlisting}[]
@@ -275,22 +275,22 @@ lcd.write_str("Hello, world!", &mut delay).unwrap();
 \section{Error Handling}
 \begin{frame}
   \frametitle{Types of Errors}
-  Errors are bound to happen in programs. Rust provides several ways of handling errors. Rust errors are seperated into two different types:
+  Errors are bound to happen in programs. Rust provides several ways of handling errors. Rust errors are separated into two different types:
   \begin{itemize}
     \item{Recoverable Errors:
 
           These errors won't cause the program to crash and usually used to report the problem to the programmer. Examples of recoverable errors are failing to read a file.}
     \item{Unrecoverable Errors:
 
-          These errors are caused by bugs in the program such as accessing invalid memory. This will immediatly stop the program from running and ``panic''.}
+          These errors are caused by bugs in the program such as accessing invalid memory. This will immediately stop the program from running and ``panic''.}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks, fragile]
   \frametitle{Unrecoverable Errors}
-  Unrecoverable errors would cuase the program to panic. There are two main ways a Rust would panic in practice. The first is using the \inlinecode{panic!} macro and the second is writing code that causes code to panic such as indexing array past the end.
+  Unrecoverable errors would cause the program to panic. There are two main ways a Rust would panic in practice. The first is using the \inlinecode{panic!} macro and the second is writing code that causes code to panic such as indexing array past the end.
   \lstinputlisting{panic.rs}
-  Normally, Rust will clean up the stack when it panics. However, for minumum binary sizes, embedded Rust programs will just abort or have a seperate function that handles the panic.
+  Normally, Rust will clean up the stack when it panics. However, for minimum binary sizes, embedded Rust programs will just abort or have a separate function that handles the panic.
 
   \pagebreak
 
@@ -317,14 +317,14 @@ panic = "abort"
 \end{frame}
 
 \begin{frame}[fragile, allowframebreaks]
-  \frametitle[]{Handling Recoverable Errrors}
-  The most common way to handle this kind of errors are using \inlinecode{match} statements.
+  \frametitle[]{Handling Recoverable Errors}
+  The most common way to handle these kinds of errors are using \inlinecode{match} statements.
 
 \begin{lstlisting}
 match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
     Ok(mut lcd) => lcd.write_str("Hello World!", &mut delay).unwrap(),
     Err(_) => {
-        defmt::println!(''Unable to setup LCD'');
+        defmt::println!(''Unable to set up LCD'');
         loop {}
     }
 }
@@ -332,11 +332,11 @@ match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
 
 \pagebreak
 
-\inlinecode{Result<T, E>} and \inlinecode{Option<T>} has many methods such as \inlinecode{unwrap\_or\_else} which takes in a function with a single parameter the error. This function would be ran if the output is and error otherwise the value \inlinecode{T} will be returned.
+\inlinecode{Result<T, E>} and \inlinecode{Option<T>} has many methods such as \inlinecode{unwrap\_or\_else} which takes in a function with a single parameter the error. This function would be run if the output is and error otherwise the value \inlinecode{T} will be returned.
 
 \begin{lstlisting}
     let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).unwrap_or_else(|_| {
-        defmt::println!(''Unable to setup LCD'');
+        defmt::println!(''Unable to set up LCD'');
         loop {}
     });
 
@@ -346,7 +346,7 @@ match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
 
 \pagebreak
 
-Often times programmers want the program to panic when an error occured. This can be done using the \inlinecode{unwrap} and \inlinecode{expect} method. Both methods causes the program to panic, but in \inlinecode{expect} a custom error message is specified as a parameter.
+Often times programmers want the program to panic when an error occurred. This can be done using the \inlinecode{unwrap} and \inlinecode{expect} method. Both methods cause the program to panic, but in \inlinecode{expect} a custom error message is specified as a parameter.
 
 \begin{lstlisting}
     let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).expect(``Cannot create LCD'');
@@ -367,7 +367,7 @@ There are many other ways to handle a recoverable error.
 \begin{itemize}
   \item{\inlinecode{unwrap\_or} method returns the value specified in the method.}
   \item{\inlinecode{unwrap\_or\_default} method returns the default value when there is an error.}
-  \item{\inlinecode{is\_ok} and \inlinecode{is\_some} or simillar methods to check if it is error or not and use \inlinecode{unwrap} safely.}
+  \item{\inlinecode{is\_ok} and \inlinecode{is\_some} or similar methods to check if it is error or not and use \inlinecode{unwrap} safely.}
   \item{\inlinecode{if let} expressions and only execute code when the pattern of value or error is matched.}
 \end{itemize}
 \end{frame}
@@ -390,7 +390,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 
   \pagebreak
 
-  The \inlinecode{?} operator helps simplify the the code and act as a shortcut to return the error if there is one and continue running the code if there is none.
+  The \inlinecode{?} operator helps simplify the code and act as a shortcut to return the error if there is one and continue running the code if there is none.
 
 \begin{lstlisting}
 fn print_hello<T: hd44780_driver::bus::DataBus>(
@@ -422,7 +422,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \section{Structs}
 \begin{frame}
   \frametitle{Structs}
-  Structs are used to group multiple related values together using names. A struct is used to implement object oriented programming (OOP) design pattern in Rust. We can use structs to hold our game.
+  Structs are used to group multiple related values together using names. A struct is used to implement object-oriented programming (OOP) design pattern in Rust. We can use structs to hold our game.
   \lstinputlisting[linerange={32 -43}]{scrolling-game/game.rs}
 \end{frame}
 
@@ -440,30 +440,30 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 
 \begin{frame}
   \frametitle{Instance Methods}
-  Defining an instance method for a struct is simillar to defining a function. Unlike normal functions, methods have \inlinecode{\&self} or \inlinecode{self: \&Self} as the first parameter. The \inlinecode{Self} type can be used as an alias to the structs we are implementing the associated function.
+  Defining an instance method for a struct is similar to defining a function. Unlike normal functions, methods have \inlinecode{\&self} or \inlinecode{self: \&Self} as the first parameter. The \inlinecode{Self} type can be used as an alias to the structs we are implementing the associated function.
   \lstinputlisting[linerange={45,311-314,315}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Mutable Instance Methods}
-  A mutable instance method is simillar to normal instance except the struct must be declared as mutable for it to be used. Instead of using \inlinecode{\&self} it takes \inlinecode{\&mut self} as the first parameter.
+  A mutable instance method is similar to normal instance except the struct must be declared as mutable for it to be used. Instead of using \inlinecode{\&self} it takes \inlinecode{\&mut self} as the first parameter.
   \lstinputlisting[linerange={45,268-270,284,315}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Non-method Functions}
-  Functions inside an \inlinecode{impl} block doesn't need to have \inlinecode{\&self} as their first parameter. These are usually used as constructor called \inlinecode{new}. However it isn't limited to only creating constructors. Non-method
+  Functions inside an \inlinecode{impl} block doesn't need to have \inlinecode{\&self} as their first parameter. These are usually used as constructor called \inlinecode{new}. However, it isn't limited to only creating constructors. Non-method
   \lstinputlisting[linerange={45,86-94,315}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{Calling Associative Functions}
-  Calling methods are simillar to other OOP languages. First, create an instance of the struct and add \inlinecode{.} followed by the method being called.
+  Calling methods are similar to other OOP languages. First, create an instance of the struct and add \inlinecode{.} followed by the method being called.
   \lstinputlisting[linerange={41-45}]{scrolling-game/lib.rs}
 
   \pagebreak
 
-  Calling non-methods are slightly different than calling methods. To call an non-method function the \inlinecode{::} syntax is used instead.
+  Calling non-methods are slightly different from calling methods. To call a non-method function the \inlinecode{::} syntax is used instead.
   \lstinputlisting[linerange={90}]{scrolling-game/main.rs}
 \end{frame}
 
@@ -477,12 +477,12 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \section{RAII and Borrow Checker}
 \begin{frame}
   \frametitle{RAII}
-  Resource Aquistion is Initialization (RAII) is used to describe a programming behavior in which memory is allocated when the object is being created. While the object is still being used, the memory is kept until the object is no longer being used. Thefore, RAII ensures no memory leaks if there are no object leaks.
+  Resource Acquisition is Initialization (RAII) is used to describe a programming behavior in which memory is allocated when the object is being created. While the object is still being used, the memory is kept. The object will release the memory when it goes out of scope. Therefore, RAII ensures no memory leaks if there are no object leaks.
 \end{frame}
 
 \begin{frame}
   \frametitle{Ownership}
-  RAII is used most prominantly in C++. However, it forms the basis of how Rust managed it's memory through the idea of ownership.
+  RAII is used most prominently in C++. However, it forms the basis of how Rust managed its memory through the idea of ownership.
 
   There are a few rules regarding ownership:
   \begin{itemize}
@@ -491,12 +491,12 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
     \item When the owner of the value went out of scope, the value is destroyed.
   \end{itemize}
 
-  A scope can be think of as anything within curly brackets is one scope. However, there are other scopes such as static which is valid for the entire runtime of the program.
+  A scope can be thought of as anything within curly brackets is one scope. However, there are other scopes such as static which is valid for the entire runtime of the program.
 \end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{Moving}
-  The ownership of a value can be ``moved''. The ``owners'' of the values can be moved in serveral ways. One of the most common way is assigning the value to a new variable.
+  The ownership of a value can be ``moved''. The ``owners'' of the values can be moved in several ways. One of the most common ways is assigning the value to a new variable.
 
   \lstinputlisting[linerange=39-44]{scrolling-game/bin/ownership.rs}
 
@@ -504,7 +504,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 
   \pagebreak
 
-  Ownership transfers works simillar with functions and methods as well. It can be moved into and out of a function.
+  Ownership transfers work similar with functions and methods as well. It can be moved into and out of a function.
   \lstinputlisting[linerange=14-17, caption={Function that takes ownership.}]{scrolling-game/bin/ownership.rs}
   \lstinputlisting[linerange=50-52, caption={Functions taking ownership usage.}]{scrolling-game/bin/ownership.rs}
 
@@ -527,7 +527,7 @@ println!("x: {}, y: {}", x, y);
 
 \begin{frame}[fragile]
   \frametitle{Borrowing}
-  If the programmer wanted to used a value in a function but still continue using the value outside. The value must be moved into and out of the function. Instead of moving the value, a reference of the value can be used instead. This is called reference ``borrowing''. It can be done by adding \inlinecode{\&} before the value and type.
+  If the programmer wanted to use a value in a function but still continue using the value outside. The value must be moved into and out of the function. Instead of moving the value, a reference of the value can be used instead. This is called reference ``borrowing''. It can be done by adding \inlinecode{\&} before the value and type.
 \begin{lstlisting}
 fn borrow(game: &ScrollingGame) {
     // Function Code
@@ -554,7 +554,7 @@ fn borrow_mutable(game: &mut ScrollingGame) {
 
 % \end{frame}
 
-% All of the following is optional and typically not needed.
+% All the following is optional and typically not needed.
 \appendix
 \section<presentation>*{\appendixname}
 \subsection<presentation>*{Additional Resources}
