@@ -220,7 +220,7 @@
   As the crates gets more and more complex with many modules and submodules, it might be inconvenient or tedious to call a function using relative or absolute paths. A path can be brought into a scope and acts as a shortcut to the path.
 
   This can be done by using the \inlinecode{use} keyword followed by the path to the identifier. Once a path is brought into scope, it can be used like it is defined in the same module scope.
-  \lstinputlisting[linerange={15}, caption={Brining \inlinecode{pac} into scope.}]{scrolling-game/main.rs}
+  \lstinputlisting[linerange={7}, caption={Brining \inlinecode{pac} into scope.}]{scrolling-game/main.rs}
 
   Edited code:
   \lstinputlisting[linerange={31}]{scrolling-game/main.rs}
@@ -423,7 +423,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \begin{frame}
   \frametitle{Structs}
   Structs are used to group multiple related values together using names. A struct is used to implement object-oriented programming (OOP) design pattern in Rust. We can use structs to hold our game.
-  \lstinputlisting[linerange={32 -43}]{scrolling-game/game.rs}
+  \lstinputlisting[linerange={32-41}]{scrolling-game/game.rs}
 \end{frame}
 
 \subsection{Associated Functions}
@@ -441,19 +441,19 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 \begin{frame}
   \frametitle{Instance Methods}
   Defining an instance method for a struct is similar to defining a function. Unlike normal functions, methods have \inlinecode{\&self} or \inlinecode{self: \&Self} as the first parameter. The \inlinecode{Self} type can be used as an alias to the structs we are implementing the associated function.
-  \lstinputlisting[linerange={45,311-314,315}]{scrolling-game/game.rs}
+  \lstinputlisting[linerange={43,311-314,314}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Mutable Instance Methods}
   A mutable instance method is similar to normal instance except the struct must be declared as mutable for it to be used. Instead of using \inlinecode{\&self} it takes \inlinecode{\&mut self} as the first parameter.
-  \lstinputlisting[linerange={45,268-270,284,315}]{scrolling-game/game.rs}
+  \lstinputlisting[linerange={43,272-274,288,314}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Non-method Functions}
   Functions inside an \inlinecode{impl} block doesn't need to have \inlinecode{\&self} as their first parameter. These are usually used as constructor called \inlinecode{new}. However, it isn't limited to only creating constructors. Non-method
-  \lstinputlisting[linerange={45,86-94,315}]{scrolling-game/game.rs}
+  \lstinputlisting[linerange={43,83-91,314}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
@@ -509,7 +509,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
   \lstinputlisting[linerange=50-52, caption={Functions taking ownership usage.}]{scrolling-game/bin/ownership.rs}
 
   \pagebreak
-  \lstinputlisting[linerange=85-94, caption={Associated function gives ownership.}]{scrolling-game/game.rs}
+  \lstinputlisting[linerange=84-91, caption={Associated function gives ownership.}]{scrolling-game/game.rs}
 \end{frame}
 
 \begin{frame}[fragile]
