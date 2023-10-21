@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Check PDF
 
 on:
   push:
@@ -21,3 +21,9 @@ jobs:
         working_directory: ${{ matrix.document }}
         root_file: |
             ${{ matrix.document }}.tex
+            
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.document }}
+        path: ${{ matrix.document }}/${{ matrix.document }}.pdf
