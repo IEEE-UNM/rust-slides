@@ -32,3 +32,5 @@ jobs:
       run: |
         cd ${{ matrix.document }}
         gh release upload ${{ github.event.release.tag_name || inputs.release }} ${{ matrix.document }}/${{ matrix.document }}.pdf
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
