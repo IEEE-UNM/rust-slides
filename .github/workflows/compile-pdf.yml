@@ -1,0 +1,23 @@
+name: Makefile CI
+
+on:
+  push:
+   
+jobs:
+  build:
+    strategy:
+      matrix:
+        document: [setup, basics, embedded]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+    
+    - name: Creating PDF
+      uses: xu-cheng/latex-action@v2
+      with:
+        working_directory: ${{ matrix.document }}
+        root_file: |
+            ${{ matrix.document }}.tex
