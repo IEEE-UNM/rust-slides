@@ -10,10 +10,10 @@ impl Direction {
         // Method Code
         let value = nb::block!(serial.read()).unwrap_or_default();
 
-        let up = Direction::UP;
-        let down = Direction::DOWN;
-        let left = Direction::LEFT;
-        let right = Direction::RIGHT;
+let up = Direction::UP;
+let down = Direction::DOWN;
+let left = Direction::LEFT;
+let right = Direction::RIGHT;
 
         match value {
             117 => Some(up),

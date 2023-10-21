@@ -36,20 +36,20 @@ fn main() -> ! {
     let mut delay = Delay::new(cp.SYST, clocks);
 
     defmt::println!("Moving Variable");
-    // Moving 1
-    let mut led2 = led;
-    led2.set_high();
-    delay.delay_ms(1000_u32);
-    // Does not compile
-    // led.set_low();
+// Moving 1
+let mut led2 = led;
+led2.set_high();
+delay.delay_ms(1000_u32);
+// Does not compile
+// led.set_low();
     led2.set_low();
 
     delay.delay_ms(1000_u32);
     defmt::println!("Moving Functions");
-    // Moving 2
-    takes_ownership(led2);
-    // Does not compile
-    // led2.set_low();
+// Moving 2
+takes_ownership(led2);
+// Does not compile
+// led2.set_low();
 
     loop {}
 }

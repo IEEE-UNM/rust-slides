@@ -27,15 +27,28 @@
 
 \begin{frame}
   \frametitle{Project Folder Download}
-  \begin{figure}
-    \includegraphics[width=.47\textwidth]{qrcode.png}
-    \caption{Link: \url{https://youtube.com}}
-  \end{figure}
+  \alert{All code snippets shown on the left are for STM32L476 and the ones at the right are for STM32F411}
+
+  \alert{Code snippets without a split are the same for both MCU}
+  \begin{columns}[t]
+    \begin{column}{.5\textwidth}
+      \begin{figure}
+        \includegraphics[width=.5\textwidth]{qrcode.png}
+        \caption{Link: \url{https://youtube.com}}
+      \end{figure}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{figure}
+        \includegraphics[width=.5\textwidth]{qrcode.png}
+        \caption{Link: \url{https://youtube.com}}
+      \end{figure}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
   \frametitle{Blinky}
-  The \inlinecode{stm32l4xx-hal} library/crate is the go-to HAL crate for STM32 L4 series MCU.
+  The \inlinecode{stm32l4xx-hal} library/crate is the go-to HAL crate for STM32 L4 series MCU (\inlinecode{stm32f4xx-hal} for STM32 F4 series).
 
   Setup Steps:
 
@@ -62,34 +75,62 @@
 
   Before we can set up any peripherals, we need to take the ownership of the peripherals.
 
-  \lstinputlisting[linerange={12}]{scrolling-game/bin/blinky.rs}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={12}]{scrolling-game/bin/blinky.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={12}]{scrolling-game-f4/bin/blinky.rs}
+    \end{column}
+  \end{columns}
 
   Once the peripherals is set up a \inlinecode{loop} is used to execute code infinitely.
 \end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{Digital Pins}
-  A digital output pin can be used to output high and low on a GPIO pin. A digital pin must be setup as an output before it can be used. In \inlinecode{stm32l4xx-hal} a digital output can be setup by doing:
-  \lstinputlisting[linerange={18-21}]{scrolling-game/bin/blinky.rs}
+  A digital output pin can be used to output high and low on a GPIO pin. A digital pin must be setup as an output before it can be used. A digital output can be setup by doing:
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={18-21}]{scrolling-game/bin/blinky.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={16-17}]{scrolling-game-f4/bin/blinky.rs}
+    \end{column}
+  \end{columns}
 
   Even though the setup procedure might differ, most crates should have similar/same functions to manipulate it.
   \lstinputlisting[linerange={27}, caption={Set Digital Output to High}]{scrolling-game/bin/blinky.rs}
   \lstinputlisting[linerange={29}, caption={Set Digital Output to Low}]{scrolling-game/bin/blinky.rs}
 
   A digital input is used to read digital signal. Setting up pins as a digital input is similar to digital output:
-  \lstinputlisting[linerange={18-21}]{scrolling-game/bin/digital-input.rs}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={18-20}]{scrolling-game/bin/digital-input.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={16-17}]{scrolling-game-f4/bin/digital-input.rs}
+    \end{column}
+  \end{columns}
 
   \pagebreak
 
   Two main methods can be used to read the digital input:
-  \lstinputlisting[linerange={27}, caption={Returns True if input is high}]{scrolling-game/bin/digital-input.rs}
-  \lstinputlisting[linerange={28}, caption={Returns True if input is low}]{scrolling-game/bin/digital-input.rs}
+  \lstinputlisting[linerange={25}, caption={Returns True if input is high}]{scrolling-game/bin/digital-input.rs}
+  \lstinputlisting[linerange={26}, caption={Returns True if input is low}]{scrolling-game/bin/digital-input.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Delay}
   A delay can be used to block program execution for a specific amount of time. To set up a delay:
-  \lstinputlisting[linerange={23-24}]{scrolling-game/bin/blinky.rs}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={23-24}]{scrolling-game/bin/blinky.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={19-20}]{scrolling-game-f4/bin/blinky.rs}
+    \end{column}
+  \end{columns}
 
   There are two different precision delays:
   \lstinputlisting[linerange={28}, caption={Delay With Millisecond Precision}]{scrolling-game/bin/blinky.rs}
@@ -99,33 +140,72 @@
 \begin{frame}[allowframebreaks]
   \frametitle{Analog Input}
   An ADC can be used to read analog input. An ADC can be setup by doing:
-  \lstinputlisting[linerange={25-28}]{scrolling-game/bin/adc.rs}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={26-27}]{scrolling-game/bin/adc.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={24-25}]{scrolling-game-f4/bin/adc.rs}
+    \end{column}
+  \end{columns}
 
   Both ADC temperature and GPIO pins can be used to read analog data.
 
+  \pagebreak
   A single sample temperature measurements can be done by doing:
-  \lstinputlisting[linerange={29,35}]{scrolling-game/bin/adc.rs}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={28,34}]{scrolling-game/bin/adc.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={26,32}]{scrolling-game-f4/bin/adc.rs}
+    \end{column}
+  \end{columns}
 
   \pagebreak
 
   Before a voltage value can be read the GPIO pin must be setup to used as analog input.
-  \lstinputlisting[linerange={19,20}]{scrolling-game/bin/adc.rs}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={19,20}]{scrolling-game/bin/adc.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={17,18}]{scrolling-game-f4/bin/adc.rs}
+    \end{column}
+  \end{columns}
 
   A single sample can be taken by using read method:
-  \lstinputlisting[linerange={32}]{scrolling-game/bin/adc.rs}
+  \lstinputlisting[linerange={31}]{scrolling-game/bin/adc.rs}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{USART/UART/Serial Port}
   A serial monitor can be used to transfer data between the host computer and MCU. The UART/USART protocol is usually used for this purpose. To set up a USART for serial communication:
-  \lstinputlisting[linerange={18-24},caption={Setting up required peripherals.}]{scrolling-game/bin/usart.rs}
-  \lstinputlisting[linerange={25-31},caption={Creating Serial Port.}]{scrolling-game/bin/usart.rs}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={18-21},caption={Setting Up Pins and Clocks}]{scrolling-game/bin/usart.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={14-15},caption={Setting Up Pins and Clocks}]{scrolling-game-f4/bin/usart.rs}
+    \end{column}
+  \end{columns}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={21-27},caption={Creating Serial Port.}]{scrolling-game/bin/usart.rs}
+    \end{column}
+    \begin{column}{.5\linewidth}
+      \lstinputlisting[linerange={16},caption={Creating Serial Port.}]{scrolling-game-f4/bin/usart.rs}
+    \end{column}
+  \end{columns}
 
   A single ``word''/character can be read using the \inlinecode{read} method.
-  \lstinputlisting[linerange={34}]{scrolling-game/bin/usart.rs}
+  \lstinputlisting[linerange={30,42}]{scrolling-game/bin/usart.rs}
+
+  \pagebreak
 
   To send data, the \inlinecode{write} method is used instead.
-  \lstinputlisting[linerange={40}]{scrolling-game/bin/usart.rs}
+  \lstinputlisting[linerange={39-40},caption={Printing a Single Character}]{scrolling-game/bin/usart.rs}
+  \lstinputlisting[linerange={32-34},caption={Printing a String}]{scrolling-game/bin/usart.rs}
 \end{frame}
 
 \begin{frame}
@@ -204,15 +284,15 @@
 
 \begin{frame}
   \frametitle{Absolute Paths}
-  \lstinputlisting[linerange={93,94}, caption={Absolute paths from external crates.}]{scrolling-game/main.rs}
-  \lstinputlisting[linerange={96,97}, caption={Absolute paths from the same crates.}]{scrolling-game/lib.rs}
+  \lstinputlisting[linerange={93-94}, caption={Absolute paths from external crates.}]{scrolling-game/main.rs}
+  \lstinputlisting[linerange={96-97,106}, caption={Absolute paths from the same crates.}]{scrolling-game/lib.rs}
 \end{frame}
 
 \begin{frame}
   \frametitle{Relative Paths}
-  \lstinputlisting[linerange={110,111}, caption={Relative paths using \inlinecode{super}.}]{scrolling-game/lib.rs}
-  \lstinputlisting[linerange={112,113}, caption={Relative paths from the module.}]{scrolling-game/lib.rs}
-  \lstinputlisting[linerange={127,128}, caption={Relative paths using \inlinecode{self}.}]{scrolling-game/lib.rs}
+  \lstinputlisting[linerange={110-111,129}, caption={Relative paths using \inlinecode{super}.}]{scrolling-game/lib.rs}
+  \lstinputlisting[linerange={112-113}, caption={Relative paths from the module.}]{scrolling-game/lib.rs}
+  \lstinputlisting[linerange={127-128}, caption={Relative paths using \inlinecode{self}.}]{scrolling-game/lib.rs}
 \end{frame}
 
 \begin{frame}
@@ -335,13 +415,13 @@ match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
 \inlinecode{Result<T, E>} and \inlinecode{Option<T>} has many methods such as \inlinecode{unwrap\_or\_else} which takes in a function with a single parameter the error. This function would be run if the output is and error otherwise the value \inlinecode{T} will be returned.
 
 \begin{lstlisting}
-    let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).unwrap_or_else(|_| {
-        defmt::println!(''Unable to set up LCD'');
-        loop {}
-    });
+let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).unwrap_or_else(|_| {
+    defmt::println!(''Unable to set up LCD'');
+    loop {}
+});
 
-    // Display the following string
-    lcd.write_str("Hello, world!", &mut delay).unwrap();
+// Display the following string
+lcd.write_str("Hello, world!", &mut delay).unwrap();
 \end{lstlisting}
 
 \pagebreak
@@ -349,16 +429,16 @@ match HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay) {
 Often times programmers want the program to panic when an error occurred. This can be done using the \inlinecode{unwrap} and \inlinecode{expect} method. Both methods cause the program to panic, but in \inlinecode{expect} a custom error message is specified as a parameter.
 
 \begin{lstlisting}
-    let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).expect(``Cannot create LCD'');
+let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, &mut delay).expect(``Cannot create LCD'');
 
-    // Unshift display and set cursor to 0
-    lcd.reset(&mut delay).unwrap();
+// Unshift display and set cursor to 0
+lcd.reset(&mut delay).unwrap();
 
-    // Clear existing characters
-    lcd.clear(&mut delay).unwrap();
+// Clear existing characters
+lcd.clear(&mut delay).unwrap();
 
-    // Display the following string
-    lcd.write_str("Hello, world!", &mut delay).unwrap();
+// Display the following string
+lcd.write_str("Hello, world!", &mut delay).unwrap();
 \end{lstlisting}
 
 \pagebreak
@@ -416,7 +496,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
   \frametitle{Enum Values}
   Instances of the enum variant (values) can be created using the \inlinecode{::} operator.
 
-  \lstinputlisting[linerange={13 -16}]{enums.rs}
+  \lstinputlisting[linerange={13-16}]{enums.rs}
 \end{frame}
 
 \section{Structs}
@@ -464,7 +544,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
   \pagebreak
 
   Calling non-methods are slightly different from calling methods. To call a non-method function the \inlinecode{::} syntax is used instead.
-  \lstinputlisting[linerange={90}]{scrolling-game/main.rs}
+  \lstinputlisting[linerange={89-90}]{scrolling-game/main.rs}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -494,7 +574,7 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
   A scope can be thought of as anything within curly brackets is one scope. However, there are other scopes such as static which is valid for the entire runtime of the program.
 \end{frame}
 
-\begin{frame}[allowframebreaks]
+\begin{frame}[allowframebreaks,fragile]
   \frametitle{Moving}
   The ownership of a value can be ``moved''. The ``owners'' of the values can be moved in several ways. One of the most common ways is assigning the value to a new variable.
 
@@ -506,10 +586,20 @@ fn print_hello<T: hd44780_driver::bus::DataBus>(
 
   Ownership transfers work similar with functions and methods as well. It can be moved into and out of a function.
   \lstinputlisting[linerange=14-17, caption={Function that takes ownership.}]{scrolling-game/bin/ownership.rs}
-  \lstinputlisting[linerange=50-52, caption={Functions taking ownership usage.}]{scrolling-game/bin/ownership.rs}
+  \lstinputlisting[linerange={49-52}, caption={Functions taking ownership usage.}]{scrolling-game/bin/ownership.rs}
 
   \pagebreak
-  \lstinputlisting[linerange=84-91, caption={Associated function gives ownership.}]{scrolling-game/game.rs}
+\begin{lstlisting}[caption={Associated function gives ownership.}]
+/// Creates a new scrolling game.
+pub fn new() -> Self {
+    Self {
+        score: 0,
+        high_score: 0,
+        lost: false,
+        board: Self::DEFAULT_BOARD,
+    }
+}
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]

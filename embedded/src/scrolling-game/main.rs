@@ -28,7 +28,7 @@ fn main() -> ! {
     // Main Function
     // Setting Up Peripherals
     let cp = cortex_m::Peripherals::take().unwrap();
-    let dp = pac::Peripherals::take().unwrap();
+let dp = pac::Peripherals::take().unwrap();
     let mut rcc = dp.RCC.constrain();
     let mut flash = dp.FLASH.constrain();
     let mut pwr = dp.PWR.constrain(&mut rcc.apb1r1);
@@ -86,12 +86,12 @@ fn main() -> ! {
     let seed = adc.read(&mut temperature).unwrap() as u64;
     let mut rng = SmallRng::seed_from_u64(seed);
 
-    // Game
-    let mut game = ScrollingGame::new();
+// Game
+let mut game = ScrollingGame::new();
 
     // Prints the intro
-    // Absolute path from external crate
-    scrolling_game::printer::print_intro(&mut serial);
+// Absolute path from external crate
+scrolling_game::printer::print_intro(&mut serial);
 
     loop {
         if game.lost() {

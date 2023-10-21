@@ -38,11 +38,11 @@ pub fn setup_lcd<
     d7: D7,
     delay: &mut D,
 ) -> HD44780<FourBitBus<RS, EN, D4, D5, D6, D7>> {
-// Creating instance
-let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, delay).unwrap();
+    // Creating instance
+    let mut lcd = HD44780::new_4bit(rs, en, d4, d5, d6, d7, delay).unwrap();
 
-// Unshift display and set cursor to 0
-lcd.reset(delay).unwrap();
+    // Unshift display and set cursor to 0
+    lcd.reset(delay).unwrap();
 
     // Clear existing characters
     lcd.clear(delay).unwrap();
@@ -93,24 +93,24 @@ pub mod printer {
         use super::block;
 
         /// Prints a new line filled with "_".
-// Absolute path (crate::Write<u8>)
-pub fn print_line<T: crate::Write<u8>>(serial: &mut T) {
-    for _ in 0..16 {
-        // Printing "_"
-        match block!(serial.write(0x5f)) {
-            _ => (),
-        };
-    }
-    // New Line
-    block!(serial.write(0x0A)).unwrap_or_default();
-}
+        // Absolute path (crate::Write<u8>)
+        pub fn print_line<T: crate::Write<u8>>(serial: &mut T) {
+            for _ in 0..16 {
+                // Printing "_"
+                match block!(serial.write(0x5f)) {
+                    _ => (),
+                };
+            }
+            // New Line
+            block!(serial.write(0x0A)).unwrap_or_default();
+        }
     }
 
     /// Print an introduction message about the game.
-// Relative path using super
-pub fn print_intro<T: super::Write<u8>>(serial: &mut T) {
-// Relative path
-utility::print_line(serial);
+    // Relative path using super
+    pub fn print_intro<T: super::Write<u8>>(serial: &mut T) {
+        // Relative path
+        utility::print_line(serial);
 
         let str = "u to move up.
 l to move left.
@@ -124,7 +124,7 @@ r to move right.";
         // New Line
         block!(serial.write(0x0A)).unwrap_or_default();
 
-// Relative path using self
-self::utility::print_line(serial);
-}
+        // Relative path using self
+        self::utility::print_line(serial);
+    }
 }

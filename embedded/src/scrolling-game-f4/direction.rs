@@ -35,10 +35,10 @@ impl Direction {
         let value = serial.read().unwrap_or_default();
 
         // Setting up alias
-let up = Direction::UP;
-let down = Direction::DOWN;
-let left = Direction::LEFT;
-let right = Direction::RIGHT;
+        let up = Direction::UP;
+        let down = Direction::DOWN;
+        let left = Direction::LEFT;
+        let right = Direction::RIGHT;
 
         // Matching ascii values
         match value {
