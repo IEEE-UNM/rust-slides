@@ -1,9 +1,8 @@
-name: Makefile CI
+name: Release PDF
 
 on:
   release:
    types: [published]
-  workflow_dispatch:
    
 jobs:
   build:
@@ -27,11 +26,4 @@ jobs:
     - name: Uploading PDF to release
       run: |
         cd ${{ matrix.document }}
-        ls
-
-    - name: Archive code coverage results
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.document }}
-        path: ${{ matrix.document }}/${{ matrix.document }}.pdf
-
+        gh release ${{ github.event.release.tag_name }} ${{ matrix.document }}/${{ matrix.document }}.pdf
