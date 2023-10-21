@@ -30,4 +30,4 @@ jobs:
     - name: Uploading PDF to release
       run: |
         cd ${{ matrix.document }}
-        gh release ${{ github.event.release.tag_name || inputs.release }} ${{ matrix.document }}/${{ matrix.document }}.pdf
+        gh release upload ${{ github.event.release.tag_name }} ${{ matrix.document }}/${{ matrix.document }}.pdf
