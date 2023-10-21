@@ -26,11 +26,11 @@ fn main() -> ! {
         stm32l4xx_hal::adc::Adc::adc1(dp.ADC1, adc_common.clone(), &mut rcc.ccipr, &mut delay);
     let mut temperature = adc.enable_temperature(&mut delay).unwrap();
 
-    let seed = adc.read(&mut temperature).unwrap_or_default();
-    let mut rng = SmallRng::seed_from_u64(seed as u64);
+let seed = adc.read(&mut temperature).unwrap_or_default();
+let mut rng = SmallRng::seed_from_u64(seed as u64);
 
     loop {
-        let number: u32 = rng.gen();
+let number: u32 = rng.gen();
         defmt::println!("RNG: {}", number);
         delay.delay_ms(500_u32);
     }
